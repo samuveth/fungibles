@@ -6,7 +6,7 @@ const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
 const { connect, isSuccess } = useConnect()
 
-const modalOpen = ref(true)
+const modalOpen = ref(false)
 
 function handleAccountClick() {
   if (isConnected.value) {
@@ -52,9 +52,11 @@ watch(isSuccess, (value) => {
 
 <template>
   <header>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <button class="btn" @click="handleAccountClick">{{ accountText }}</button>
+    <nav class="flex justify-between items-center px-4 py-3 border-b">
+      <h1 class="text-lg">fungible.xyz</h1>
+      <button class="btn btn-primary btn-outline text-base pl-5" @click="handleAccountClick">
+        {{ accountText }}
+      </button>
     </nav>
   </header>
 

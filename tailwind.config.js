@@ -6,5 +6,8 @@ export default {
   theme: {
     extend: {}
   },
-  plugins: [DaisyUIPlugin]
+  plugins: [DaisyUIPlugin],
+  daisyui: {
+    themes: ['lofi']
+  }
 }

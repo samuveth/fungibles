@@ -7,9 +7,10 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BaseModal: (typeof import('./src/components/BaseModal.vue'))['default']
-    IHiXMark20Solid: (typeof import('~icons/heroicons/x-mark20-solid'))['default']
-    RouterLink: (typeof import('vue-router'))['RouterLink']
-    RouterView: (typeof import('vue-router'))['RouterView']
+    BaseModal: typeof import('./src/components/BaseModal.vue')['default']
+    IHiX: typeof import('~icons/heroicons/x')['default']
+    IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
