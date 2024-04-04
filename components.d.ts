@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseModal: typeof import('./src/components/BaseModal.vue')['default']
+    BlockManage: typeof import('./src/components/BlockManage.vue')['default']
     IHiX: typeof import('~icons/heroicons/x')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

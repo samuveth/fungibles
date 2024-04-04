@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
-import { injected, coinbaseWallet, walletConnect } from '@wagmi/connectors'
+import { connectors } from '@/helpers/wagmiConfig'
 
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
@@ -24,24 +24,15 @@ const accountText = computed(() => {
   }
 })
 
-const connectors = [
-  {
-    name: 'Browser wallet',
-    connector: injected()
-  },
-  {
-    name: 'Coinbase Wallet',
-    connector: coinbaseWallet({
-      appName: 'fungible.xyz'
-    })
-  },
-  {
-    name: 'WalletConnect',
-    connector: walletConnect({
-      projectId: '3fcc6bba6f1de962d911bb5b5c3dba68'
-    })
-  }
-]
+const connectorsList = computed(() => {
+  const names = ['Browser Wallet', 'Coinbase Wallet', 'Wallet Connect']
+  return connectors.map((connector, index) => {
+    return {
+      name: names[index],
+      connector: connector
+    }
+  })
+})
 
 watch(isSuccess, (value) => {
   if (value) {
@@ -54,8 +45,10 @@ watch(isSuccess, (value) => {
   <header>
     <nav class="flex justify-between items-center px-4 py-3 border-b">
       <h1 class="text-lg">fungible.xyz</h1>
-      <button class="btn btn-primary btn-outline text-base pl-5" @click="handleAccountClick">
-        {{ accountText }}
+      <button class="btn btn-primary btn-outline text-base" @click="handleAccountClick">
+        <span>
+          {{ accountText }}
+        </span>
       </button>
     </nav>
   </header>
@@ -64,7 +57,7 @@ watch(isSuccess, (value) => {
 
   <BaseModal title="Connect Wallet" :open="modalOpen" @close="modalOpen = false">
     <ul class="space-y-2">
-      <li v-for="connector in connectors" :key="connector.name">
+      <li v-for="connector in connectorsList" :key="connector.name">
         <button class="btn w-full" @click="connect({ connector: connector.connector })">
           {{ connector.name }}
         </button>
