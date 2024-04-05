@@ -9,13 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BaseModal: typeof import('./src/components/BaseModal.vue')['default']
     BlockManage: typeof import('./src/components/BlockManage.vue')['default']
-    copy: typeof import('./src/components/InscriptionList copy.vue')['default']
-    IHiExclamationCircle: typeof import('~icons/heroicons/exclamation-circle')['default']
     IHiFaceFrown: typeof import('~icons/heroicons/face-frown')['default']
-    IHiInformation: typeof import('~icons/heroicons/information')['default']
     IHiInformationCircle: typeof import('~icons/heroicons/information-circle')['default']
-    IHiInformationCircle20Solid: typeof import('~icons/heroicons/information-circle20-solid')['default']
-    IHiX: typeof import('~icons/heroicons/x')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
     InscriptionList: typeof import('./src/components/InscriptionList.vue')['default']
     InscriptionListItem: typeof import('./src/components/InscriptionListItem.vue')['default']
