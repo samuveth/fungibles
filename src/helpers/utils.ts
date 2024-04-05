@@ -29,7 +29,7 @@ async function getInscription(seed: Seed) {
   return {
     svg,
     seed,
-    meta: JSON.parse(meta)
+    meta: JSON.parse(meta as string)
   }
 }
 
