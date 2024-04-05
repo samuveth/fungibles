@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
 import { connectors } from '@/helpers/wagmiConfig'
+import { shortenAddress } from '@/helpers/utils'
 
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
@@ -18,7 +19,7 @@ function handleAccountClick() {
 
 const accountText = computed(() => {
   if (isConnected.value && address.value) {
-    return `${address.value.slice(0, 6)}...${address.value.slice(-4)}`
+    return shortenAddress(address.value)
   } else {
     return 'Connect'
   }
