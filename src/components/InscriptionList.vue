@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { type Inscription } from '@/helpers/types'
-import { type Address } from 'viem'
 
 defineProps<{
-  isLoading: boolean
   inscriptions: Inscription[]
 }>()
 </script>

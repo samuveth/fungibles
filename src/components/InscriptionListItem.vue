@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useAccount } from 'use-wagmi'
-import { type Address } from 'viem'
+import { type Address, parseUnits } from 'viem'
 import { type Inscription } from '@/helpers/types'
+import { useStorage } from '@vueuse/core'
 import { sendTokens } from '@/helpers/utils'
+import { TOKEN_DECIMALS } from '@/helpers/constants'
 import { useAccountsStore } from '@/stores/accounts'
-import { shortenAddress } from '@/helpers/utils'
 
 const props = defineProps<{
   inscription: Inscription
@@ -12,6 +13,7 @@ const props = defineProps<{
 
 const accountsStore = useAccountsStore()
 const { addresses } = useAccount()
+const inscriptionsStorage = useStorage<Inscription[]>('fungible-inscriptions', [])
 
 const sending = ref(false)
 const sendModalOpen = ref(false)
@@ -21,33 +23,39 @@ const filteredAddresses = computed(() =>
 )
 
 const actions = computed(() => {
-  const list = [
-    {
-      label: 'Save',
-      tooltip:
-        'Save the inscription of this fungi. This can be used to restore the fungi in the future.',
-      action: () => {
-        console.log(props.inscription)
-      }
-    }
-  ]
+  const list = []
 
   if (props.inscription.seed.isDynamic) {
     list.push({
-      label: 'Stabilize',
-      tooltip: 'Stabilize the fungi by sending it to your other wallet.',
+      label: 'Stabilize Fungi',
+      tooltip: 'Stabilize this fungi by sending it to another wallet.',
       action: () => {
         sendModalOpen.value = true
       }
     })
   } else {
     list.push({
-      label: 'Send',
-      tooltip: 'Send the fungi to your other wallet.',
+      label: 'Send Fungi',
+      tooltip: 'Send this fungi to another wallet.',
       action: () => {
         sendModalOpen.value = true
       }
     })
+
+    if (props.inscription.seed.isDynamic) {
+      list.push({
+        label: 'Save Inscription',
+        tooltip:
+          'Save the inscription of this fungi. This can be used to restore the fungi in the future.',
+        action: () => {
+          if (!inscriptionsStorage.value.includes(props.inscription))
+            inscriptionsStorage.value = [
+              ...inscriptionsStorage.value,
+              ...inscriptionToString(props.inscription)
+            ]
+        }
+      })
+    }
   }
 
   return list
@@ -56,13 +64,24 @@ const actions = computed(() => {
 async function send(address: Address) {
   try {
     sending.value = true
-    await sendTokens(props.inscription.seed.owner, address, props.inscription.seed.seed)
+    await sendTokens(
+      props.inscription.seed.owner,
+      address,
+      parseUnits(props.inscription.seed.seed.toString(), TOKEN_DECIMALS).toString()
+    )
     accountsStore.reload()
   } catch (error) {
     console.error(error)
   } finally {
     sending.value = false
   }
+}
+
+function inscriptionToString(inscription: Inscription) {
+  const newInscription: any = inscription
+  newInscription.seed.seed = inscription.seed.seed.toString()
+  newInscription.seed.extra = inscription.seed.extra.toString()
+  return [newInscription]
 }
 
 onMounted(() => {})
@@ -83,34 +102,25 @@ onMounted(() => {})
       >
         <button class="btn w-full !gap-0">
           {{ action.label }}
-          <i-hi-information-circle class="ml-2 text-base" />
+          <i-icon-info class="ml-2" />
         </button>
       </div>
     </div>
 
     <div class="px-3 py-2 border-x border-b border-dashed border-opacity-50">
-      <div class="text-xl">
+      <div class="text-md">
         {{ inscription.seed.isDynamic ? 'Dynamic Fungi' : 'Stable Fungi' }}
         {{ inscription.seed.seed }}
       </div>
 
-      <BaseModal title="Select address" :open="sendModalOpen" @close="sendModalOpen = false">
-        <div class="space-y-3">
-          <div
-            v-for="address in filteredAddresses"
-            :key="address"
-            class="flex justify-between items-center border border-dashed p-2"
-          >
-            {{ shortenAddress(address) }}
-            <div>
-              <button class="btn btn-sm min-w-20" @click="send(address)">
-                <span v-if="sending" class="loading loading-spinner loading-xs"></span>
-                <span v-else> Send </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </BaseModal>
+      <ModalSend
+        v-if="filteredAddresses"
+        :open="sendModalOpen"
+        :filtered-addresses="filteredAddresses"
+        :sending="sending"
+        @send="send"
+        @close="sendModalOpen = false"
+      />
     </div>
   </div>
 </template>

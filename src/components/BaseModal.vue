@@ -1,15 +1,21 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title: string
   open: boolean
+  width?: string
 }>()
 
 defineEmits(['close'])
+
+const modalWidth = computed(() => {
+  if (props.width === 'lg') return 'sm:max-w-7xl'
+  return 'sm:max-w-96'
+})
 </script>
 
 <template>
   <dialog class="modal" :class="{ 'modal-open': open }">
-    <div class="modal-box sm:max-w-96">
+    <div class="modal-box" :class="modalWidth">
       <button
         class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
         @click="$emit('close')"

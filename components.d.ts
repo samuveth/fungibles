@@ -12,8 +12,11 @@ declare module 'vue' {
     IHiFaceFrown: typeof import('~icons/heroicons/face-frown')['default']
     IHiInformationCircle: typeof import('~icons/heroicons/information-circle')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
+    IIconHeart: typeof import('~icons/icon/heart')['default']
+    IIconInfo: typeof import('~icons/icon/info')['default']
     InscriptionList: typeof import('./src/components/InscriptionList.vue')['default']
     InscriptionListItem: typeof import('./src/components/InscriptionListItem.vue')['default']
+    ModalSend: typeof import('./src/components/ModalSend.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

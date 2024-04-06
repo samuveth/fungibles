@@ -1,7 +1,7 @@
-import { TOKEN_ADDRESS, TOKEN_DECIMALS } from '@/helpers/constants'
+import { TOKEN_ADDRESS } from '@/helpers/constants'
 import { config } from '@/helpers/wagmiConfig'
 import { readContract, writeContract, waitForTransactionReceipt } from '@wagmi/core'
-import { parseUnits, type Address } from 'viem'
+import { type Address } from 'viem'
 import abi from '@/helpers/token.json'
 import { type Seed, type Inscription } from '@/helpers/types'
 
@@ -90,12 +90,12 @@ export function shortenAddress(address: string) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
 }
 
-export async function sendTokens(from: Address, to: Address, amount: number) {
+export async function sendTokens(from: Address, to: Address, amount: string) {
   const result = await writeContract(config, {
     abi,
     address: TOKEN_ADDRESS,
     functionName: 'transfer',
-    args: [to, parseUnits(amount.toString(), TOKEN_DECIMALS)],
+    args: [to, amount],
     account: from
   })
   await waitForTransactionReceipt(config, {

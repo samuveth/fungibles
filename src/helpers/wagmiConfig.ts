@@ -1,6 +1,6 @@
 import { http, createConfig } from 'use-wagmi'
 import { base } from 'use-wagmi/chains'
-import { injected, coinbaseWallet, walletConnect } from '@wagmi/connectors'
+import { injected } from '@wagmi/connectors'
 
 export const connectors = [
   injected()
