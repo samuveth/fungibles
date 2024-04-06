@@ -18,6 +18,9 @@ const inscriptionsStorage = useStorage<Inscription[]>('fungible-inscriptions', [
 const sending = ref(false)
 const sendModalOpen = ref(false)
 
+const sendingAmount = ref(false)
+const sendAmountModalOpen = ref(false)
+
 const filteredAddresses = computed(() =>
   addresses.value?.filter((address) => address !== props.inscription.seed.owner)
 )
@@ -42,9 +45,17 @@ const actions = computed(() => {
         sendModalOpen.value = true
       }
     })
+
+    list.push({
+      label: 'Send Amount',
+      tooltip: 'Send a specific amount of this fungi to another wallet.',
+      action: () => {
+        sendAmountModalOpen.value = true
+      }
+    })
   } else {
     list.push({
-      label: 'Send Fungi',
+      label: 'Transfer Fungi',
       tooltip: 'Send this fungi to another wallet.',
       action: () => {
         sendModalOpen.value = true
@@ -80,6 +91,22 @@ async function send(address: Address) {
     console.error(error)
   } finally {
     sending.value = false
+  }
+}
+
+async function sendAmount(address: Address, amount: string) {
+  try {
+    sendingAmount.value = true
+    await sendTokens(
+      props.inscription.seed.owner,
+      address,
+      parseUnits(amount, TOKEN_DECIMALS).toString()
+    )
+    accountsStore.reload()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    sendingAmount.value = false
   }
 }
 
@@ -119,6 +146,15 @@ onMounted(() => {})
         :sending="sending"
         @send="send"
         @close="sendModalOpen = false"
+      />
+      <ModalSend
+        v-if="filteredAddresses"
+        :open="sendAmountModalOpen"
+        :filtered-addresses="filteredAddresses"
+        :sending="sendingAmount"
+        :max-amount="inscription.seed.seed.toString()"
+        @send="sendAmount"
+        @close="sendAmountModalOpen = false"
       />
     </div>
   </div>
