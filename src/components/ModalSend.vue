@@ -12,6 +12,7 @@ const props = defineProps<{
 const emit = defineEmits(['close', 'send'])
 
 const amount = ref('')
+const inputRef = ref<HTMLInputElement | null>(null)
 
 const isGreaterThanMaxAmount = computed(() => {
   if (!props.maxAmount) return false
@@ -23,12 +24,20 @@ function send(address: Address) {
   if (!amount.value || isGreaterThanMaxAmount.value) return
   emit('send', address, amount.value.toString())
 }
+
+watch(
+  () => props.open,
+  () => {
+    if (inputRef.value && props.open) inputRef.value.focus()
+  }
+)
 </script>
 
 <template>
   <BaseModal title="Select address" :open="open" @close="$emit('close')">
     <div v-if="maxAmount" class="mb-4">
       <input
+        ref="inputRef"
         v-model="amount"
         type="number"
         placeholder="Enter amount"

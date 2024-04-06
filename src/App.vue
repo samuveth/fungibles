@@ -21,14 +21,6 @@ function handleAccountClick() {
   }
 }
 
-const accountText = computed(() => {
-  if (isConnected.value && address.value) {
-    return shortenAddress(address.value)
-  } else {
-    return 'Connect'
-  }
-})
-
 const connectorsList = computed(() => {
   const names = ['Browser Wallet', 'Coinbase Wallet', 'Wallet Connect']
   return connectors.map((connector, index) => {
@@ -60,19 +52,57 @@ function isMobile() {
       <nav class="flex justify-between items-center px-4 py-3 border-b">
         <h1 class="text-lg">fungible.xyz</h1>
         <div class="flex items-center gap-2">
-          <button v-if="address" class="btn btn-outline" @click="favoritesModalOpen = true">
-            <i-icon-heart class="text-md" />
+          <button
+            v-if="!address"
+            class="btn btn-primary text-base group min-w-[154px]"
+            @click="handleAccountClick"
+          >
+            <span> Connect </span>
           </button>
-          <button class="btn btn-primary btn-outline text-base" @click="handleAccountClick">
-            <span>
-              {{ accountText }}
-            </span>
-          </button>
+          <div v-else class="dropdown dropdown-bottom dropdown-end">
+            <div tabindex="0" role="button" class="btn m-1">
+              {{ shortenAddress(address) }}
+            </div>
+            <ul
+              tabindex="0"
+              class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li><a @click="favoritesModalOpen = true">Saved Inscriptions</a></li>
+              <li><a @click="disconnect()">Disconnect</a></li>
+            </ul>
+          </div>
         </div>
       </nav>
     </header>
 
     <RouterView />
+
+    <footer
+      class="fixed bottom-0 left-0 right-0 py-3 px-4 border-t bg-base-100 flex justify-between"
+    >
+      <button class="btn btn-outline btn-sm border-0" @click="favoritesModalOpen = true">
+        <i-icon-heart class="text-md" />
+        Saved Inscriptions
+      </button>
+      <div class="flex gap-2">
+        <a
+          href="https://github.com/samuveth/fungibles"
+          target="_blank"
+          class="btn btn-outline btn-sm border-0"
+        >
+          <i-icon-github class="text-md" />
+        </a>
+        <a
+          href="https://twitter.com/samsamlantan"
+          target="_blank"
+          class="btn btn-outline btn-sm border-0"
+        >
+          <i-icon-x class="text-md" />
+        </a>
+      </div>
+    </footer>
+
+    <TheToasts />
 
     <BaseModal title="Connect Wallet" :open="modalOpen" @close="modalOpen = false">
       <div role="alert" class="alert alert-info">
@@ -89,6 +119,7 @@ function isMobile() {
         </li>
       </ul>
     </BaseModal>
+
     <BaseModal
       title="Saved Inscriptions"
       :open="favoritesModalOpen"

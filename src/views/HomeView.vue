@@ -7,7 +7,7 @@ const { connect } = useConnect()
 </script>
 
 <template>
-  <main class="px-4 py-4 max-w-7xl mx-auto">
+  <main class="px-4 pt-4 pb-[73px] max-w-7xl mx-auto">
     <div v-if="addresses?.length" class="grid grid-cols-2 gap-4">
       <BlockManage v-for="(_, i) in addresses.length" :key="i" :addressIndex="i" />
       <div class="p-4 border">

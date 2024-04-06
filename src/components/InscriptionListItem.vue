@@ -6,12 +6,14 @@ import { useStorage } from '@vueuse/core'
 import { sendTokens } from '@/helpers/utils'
 import { TOKEN_DECIMALS } from '@/helpers/constants'
 import { useAccountsStore } from '@/stores/accounts'
+import { useToastStore } from '@/stores/toast'
 
 const props = defineProps<{
   inscription: Inscription
 }>()
 
 const accountsStore = useAccountsStore()
+const { addMessage } = useToastStore()
 const { addresses } = useAccount()
 const inscriptionsStorage = useStorage<Inscription[]>('fungible-inscriptions', [])
 
@@ -76,6 +78,7 @@ function addInscriptionToStorage() {
     return
 
   inscriptionsStorage.value = [...inscriptionsStorage.value, ...[props.inscription]]
+  addMessage('Inscription has been saved.')
 }
 
 async function send(address: Address) {

@@ -10,14 +10,16 @@ declare module 'vue' {
     BaseModal: typeof import('./src/components/BaseModal.vue')['default']
     BlockManage: typeof import('./src/components/BlockManage.vue')['default']
     IHiFaceFrown: typeof import('~icons/heroicons/face-frown')['default']
-    IHiInformationCircle: typeof import('~icons/heroicons/information-circle')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
+    IIconGithub: typeof import('~icons/icon/github')['default']
     IIconHeart: typeof import('~icons/icon/heart')['default']
     IIconInfo: typeof import('~icons/icon/info')['default']
+    IIconX: typeof import('~icons/icon/x')['default']
     InscriptionList: typeof import('./src/components/InscriptionList.vue')['default']
     InscriptionListItem: typeof import('./src/components/InscriptionListItem.vue')['default']
     ModalSend: typeof import('./src/components/ModalSend.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TheToasts: typeof import('./src/components/TheToasts.vue')['default']
   }
 }

@@ -67,7 +67,7 @@ watch(
         <h3 class="text-md">Inscriptions {{ inscriptions.length }}</h3>
         <button
           class="text-md flex gap-1 hover:underline cursor-pointer tooltip"
-          data-tip="Send fungi"
+          data-tip="Send All"
           @click="sendModalOpen = true"
         >
           {{ balance }}
