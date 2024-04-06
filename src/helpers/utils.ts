@@ -72,13 +72,17 @@ export async function getInscriptionsByAddress(address: Address) {
 
   let seeds = (await Promise.all(seedPromises)) as Seed[]
 
-  seeds = seeds.map((seed) => ({ seed: seed.seed, extra: seed.extra, owner: address }))
+  seeds = seeds.map((seed) => ({
+    seed: seed.seed.toString(),
+    extra: seed.extra.toString(),
+    owner: address
+  }))
 
   if (Number(dynamicMushroom.seed)) {
     seeds.unshift({
       isDynamic: true,
-      seed: dynamicMushroom.seed,
-      extra: dynamicMushroom.extra,
+      seed: dynamicMushroom.seed.toString(),
+      extra: dynamicMushroom.extra.toString(),
       owner: address
     })
   }

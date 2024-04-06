@@ -2,8 +2,8 @@ import { type Address } from 'viem'
 
 export type Seed = {
   isDynamic?: boolean
-  seed: bigint
-  extra: bigint
+  seed: string
+  extra: string
   owner: Address
 }
 

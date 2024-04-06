@@ -27,6 +27,15 @@ const actions = computed(() => {
 
   if (props.inscription.seed.isDynamic) {
     list.push({
+      label: 'Save Inscription',
+      tooltip:
+        'Save the inscription of this fungi. This can be used to restore the fungi in the future.',
+      action: () => {
+        addInscriptionToStorage()
+      }
+    })
+
+    list.push({
       label: 'Stabilize Fungi',
       tooltip: 'Stabilize this fungi by sending it to another wallet.',
       action: () => {
@@ -41,25 +50,22 @@ const actions = computed(() => {
         sendModalOpen.value = true
       }
     })
-
-    if (props.inscription.seed.isDynamic) {
-      list.push({
-        label: 'Save Inscription',
-        tooltip:
-          'Save the inscription of this fungi. This can be used to restore the fungi in the future.',
-        action: () => {
-          if (!inscriptionsStorage.value.includes(props.inscription))
-            inscriptionsStorage.value = [
-              ...inscriptionsStorage.value,
-              ...inscriptionToString(props.inscription)
-            ]
-        }
-      })
-    }
   }
 
   return list
 })
+
+function addInscriptionToStorage() {
+  const storageSeeds = inscriptionsStorage.value.map((inscription) => inscription.seed.seed)
+  const storageInscriptions = inscriptionsStorage.value.map((inscription) => inscription.seed.extra)
+  if (
+    storageSeeds.includes(props.inscription.seed.seed) &&
+    storageInscriptions.includes(props.inscription.seed.extra)
+  )
+    return
+
+  inscriptionsStorage.value = [...inscriptionsStorage.value, ...[props.inscription]]
+}
 
 async function send(address: Address) {
   try {
@@ -75,13 +81,6 @@ async function send(address: Address) {
   } finally {
     sending.value = false
   }
-}
-
-function inscriptionToString(inscription: Inscription) {
-  const newInscription: any = inscription
-  newInscription.seed.seed = inscription.seed.seed.toString()
-  newInscription.seed.extra = inscription.seed.extra.toString()
-  return [newInscription]
 }
 
 onMounted(() => {})
