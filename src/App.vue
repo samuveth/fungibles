@@ -8,7 +8,7 @@ import { type Inscription } from '@/helpers/types'
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
 const { connect, isSuccess } = useConnect()
-const inscriptionsStorage = useStorage<Inscription[]>('fungible-inscriptions', [])
+const inscriptionsStorage = useStorage<Inscription[]>('fungibles-inscriptions', [])
 
 const modalOpen = ref(false)
 const favoritesModalOpen = ref(false)
@@ -50,7 +50,7 @@ function isMobile() {
   <template v-if="!isMobile()">
     <header>
       <nav class="flex justify-between items-center px-4 py-3 border-b">
-        <h1 class="text-lg">fungible.xyz</h1>
+        <h1 class="text-lg">fungibles.xyz</h1>
         <div class="flex items-center gap-2">
           <button
             v-if="!address"

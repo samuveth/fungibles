@@ -28,8 +28,8 @@ const { connect } = useConnect()
     </div>
     <div v-else class="max-w-4xl mx-auto">
       <article class="space-y-3">
-        <h2 class="text-2xl">Welcome to fungible.xyz</h2>
-        <p>Fungible.xyz is an interface for you to generate and manage your $FUNGI.</p>
+        <h2 class="text-2xl">Welcome to fungibles.xyz</h2>
+        <p>Fungibles.xyz is an interface for you to generate and manage your $FUNGI.</p>
 
         <h3 class="text-xl pt-6">Connect Accounts</h3>
         <div class="flex gap-4">

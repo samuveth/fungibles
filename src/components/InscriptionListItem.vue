@@ -15,7 +15,7 @@ const props = defineProps<{
 const accountsStore = useAccountsStore()
 const { addMessage } = useToastStore()
 const { addresses } = useAccount()
-const inscriptionsStorage = useStorage<Inscription[]>('fungible-inscriptions', [])
+const inscriptionsStorage = useStorage<Inscription[]>('fungibles-inscriptions', [])
 
 const sending = ref(false)
 const sendModalOpen = ref(false)
