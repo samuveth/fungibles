@@ -95,26 +95,24 @@ function isMobile() {
       width="lg"
       @close="favoritesModalOpen = false"
     >
-      <ul class="w-lg grid grid-cols-3 gap-4">
-        <div v-if="!inscriptionsStorage.length">No saved inscriptions found</div>
-        <div v-else>
-          <li v-for="(inscription, i) in inscriptionsStorage" :key="i">
-            <div v-html="inscription.svg" />
-            <div class="px-3 py-2 border-x border-b border-dashed border-opacity-50">
-              <div class="text-xl flex items-center gap-1">
-                <div class="mt-0.5">
-                  <span class="opacity-60"> Amount: </span>
-                  {{ inscription.seed.seed }}
-                </div>
-                <img src="@/../public/favicon1.png" alt="fungi" class="w-6 h-6" />
+      <div v-if="!inscriptionsStorage.length">No saved inscriptions found</div>
+      <ul v-else class="w-lg grid grid-cols-3 gap-4">
+        <li v-for="(inscription, i) in inscriptionsStorage" :key="i">
+          <div v-html="inscription.svg" />
+          <div class="px-3 py-2 border-x border-b border-dashed border-opacity-50">
+            <div class="text-xl flex items-center gap-1">
+              <div class="mt-0.5">
+                <span class="opacity-60"> Amount: </span>
+                {{ inscription.seed.seed }}
               </div>
-              <div class="text-xl">
-                <span class="opacity-60"> Addresss: </span>
-                {{ shortenAddress(inscription.seed.owner) }}
-              </div>
+              <img src="@/../public/favicon1.png" alt="fungi" class="w-6 h-6" />
             </div>
-          </li>
-        </div>
+            <div class="text-xl">
+              <span class="opacity-60"> Addresss: </span>
+              {{ shortenAddress(inscription.seed.owner) }}
+            </div>
+          </div>
+        </li>
       </ul>
     </BaseModal>
   </template>
