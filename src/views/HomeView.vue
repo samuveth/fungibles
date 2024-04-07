@@ -56,7 +56,7 @@ const { connect } = useConnect()
 
         <h3>Upcoming features:</h3>
         <ul class="list-disc list-inside">
-          <li>Mobile support</li>
+          <li>Mobile and single wallet support</li>
           <li>Copy or export fungi image</li>
           <li>More fungi management features</li>
           <li>Contests and leader board</li>

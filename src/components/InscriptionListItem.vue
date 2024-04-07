@@ -10,6 +10,7 @@ import { useToastStore } from '@/stores/toast'
 
 const props = defineProps<{
   inscription: Inscription
+  isOnlyInscription: boolean
 }>()
 
 const accountsStore = useAccountsStore()
@@ -39,20 +40,11 @@ const actions = computed(() => {
         addInscriptionToStorage()
       }
     })
-
     list.push({
       label: 'Stabilize Fungi',
       tooltip: 'Stabilize this fungi by sending it to another wallet.',
       action: () => {
         sendModalOpen.value = true
-      }
-    })
-
-    list.push({
-      label: 'Send Amount',
-      tooltip: 'Send a specific amount of this fungi to another wallet.',
-      action: () => {
-        sendAmountModalOpen.value = true
       }
     })
   } else {
@@ -61,6 +53,16 @@ const actions = computed(() => {
       tooltip: 'Send this fungi to another wallet.',
       action: () => {
         sendModalOpen.value = true
+      }
+    })
+  }
+
+  if (props.isOnlyInscription || props.inscription.seed.isDynamic) {
+    list.push({
+      label: 'Send Amount',
+      tooltip: 'Send a specific amount of this fungi to another wallet.',
+      action: () => {
+        sendAmountModalOpen.value = true
       }
     })
   }
