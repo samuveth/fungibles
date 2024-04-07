@@ -11,6 +11,7 @@ declare module 'vue' {
     BlockManage: typeof import('./src/components/BlockManage.vue')['default']
     IHiFaceFrown: typeof import('~icons/heroicons/face-frown')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
+    IIconExclamation: typeof import('~icons/icon/exclamation')['default']
     IIconGithub: typeof import('~icons/icon/github')['default']
     IIconHeart: typeof import('~icons/icon/heart')['default']
     IIconInfo: typeof import('~icons/icon/info')['default']
