@@ -64,20 +64,6 @@ const { connect } = useConnect()
           <li>... and more!</li>
         </ul>
 
-        <h3>Official socials:</h3>
-        <ul>
-          <li class="list-disc list-inside">
-            <a href="https://twitter.com/Fungi_ERC20i" target="_blank" class="underline"
-              >Fungi_ERC20i Twitter</a
-            >
-          </li>
-          <li class="list-disc list-inside">
-            <a href="https://twitter.com/toddstooldoteth" target="_blank" class="underline"
-              >ToddStool Twitter</a
-            >
-          </li>
-        </ul>
-
         <h3>Learn more:</h3>
 
         <ul>
@@ -89,6 +75,18 @@ const { connect } = useConnect()
               >Join the Telegram</a
             >
           </li>
+          <ul>
+            <li class="list-disc list-inside">
+              <a href="https://twitter.com/Fungi_ERC20i" target="_blank" class="underline"
+                >Fungi_ERC20i Twitter</a
+              >
+            </li>
+            <li class="list-disc list-inside">
+              <a href="https://twitter.com/toddstooldoteth" target="_blank" class="underline"
+                >ToddStool Twitter</a
+              >
+            </li>
+          </ul>
           <li class="list-disc list-inside">
             <a href="https://fungifungi.art/" target="_blank" class="underline"
               >Fungifungi.art Website</a
