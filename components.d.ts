@@ -18,6 +18,8 @@ declare module 'vue' {
     IIconX: typeof import('~icons/icon/x')['default']
     InscriptionList: typeof import('./src/components/InscriptionList.vue')['default']
     InscriptionListItem: typeof import('./src/components/InscriptionListItem.vue')['default']
+    ModalCombine: typeof import('./src/components/ModalCombine.vue')['default']
+    ModalGenerate: typeof import('./src/components/ModalGenerate.vue')['default']
     ModalSend: typeof import('./src/components/ModalSend.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

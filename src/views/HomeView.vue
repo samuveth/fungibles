@@ -1,30 +1,13 @@
 <script setup lang="ts">
-import { useAccount, useConnect } from 'use-wagmi'
-import { connectors } from '@/helpers/wagmiConfig'
+import { useAccount } from 'use-wagmi'
 
-const { addresses } = useAccount()
-const { connect } = useConnect()
+const { address } = useAccount()
 </script>
 
 <template>
   <main class="px-4 pt-4 pb-[73px] max-w-7xl mx-auto">
-    <div v-if="addresses?.length" class="grid grid-cols-2 gap-4">
-      <BlockManage v-for="(_, i) in addresses.length" :key="i" :addressIndex="i" />
-      <div class="p-4 border">
-        <div class="border p-4 border-dashed border-opacity-50 space-y-2">
-          <h3 class="text-lg">Connect more accounts</h3>
-          <p v-if="addresses.length < 2">
-            A minimum of 2 accounts is required to send fungi back and forth between them.
-          </p>
-          <p>
-            You can connect as many accounts as you like. Connect and select all the accounts you
-            want to use in your wallet.
-          </p>
-          <button class="btn btn-primary mt-4" @click="connect({ connector: connectors[0] })">
-            Connect
-          </button>
-        </div>
-      </div>
+    <div v-if="address">
+      <BlockManage />
     </div>
     <div v-else class="max-w-4xl mx-auto">
       <div role="alert" class="alert alert-warning mb-4">
