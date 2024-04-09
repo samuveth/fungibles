@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
     <div v-for="inscription in inscriptions" :key="inscription.seed.seed">
       <InscriptionListItem
         :inscription="inscription"

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useAccount } from 'use-wagmi'
 import { type Address, parseUnits } from 'viem'
 import { type Inscription } from '@/helpers/types'
 import { useStorage } from '@vueuse/core'
-import { sendTokens } from '@/helpers/utils'
+import { sendTokens, generateInscriptions, stabilizeInscription } from '@/helpers/utils'
 import { TOKEN_DECIMALS } from '@/helpers/constants'
-import { useAccountsStore } from '@/stores/accounts'
+import { useAccountStore } from '@/stores/account'
 import { useToastStore } from '@/stores/toast'
 
 const props = defineProps<{
@@ -13,71 +12,76 @@ const props = defineProps<{
   isOnlyInscription: boolean
 }>()
 
-const accountsStore = useAccountsStore()
+const accountStore = useAccountStore()
 const { addMessage } = useToastStore()
-const { addresses } = useAccount()
 const inscriptionsStorage = useStorage<Inscription[]>('fungibles-inscriptions', [])
 
-const sending = ref(false)
+const sendLoading = ref(false)
 const sendModalOpen = ref(false)
 
-const sendingAmount = ref(false)
-const sendAmountModalOpen = ref(false)
-
-const filteredAddresses = computed(() =>
-  addresses.value?.filter((address) => address !== props.inscription.seed.owner)
-)
+const generateLoading = ref(false)
+const generateModalOpen = ref(false)
 
 const actions = computed(() => {
   const list = []
 
+  list.push({
+    label: 'Save',
+    tooltip:
+      'Save the inscription of this fungi. This can be used to restore the fungi in the future.',
+    action: () => {
+      addInscriptionToStorage()
+    }
+  })
+
+  list.push({
+    label: 'Transfer',
+    tooltip: 'Send this fungi to another wallet.',
+    action: () => {
+      sendModalOpen.value = true
+    }
+  })
   if (props.inscription.seed.isDynamic) {
     list.push({
-      label: 'Save Inscription',
-      tooltip:
-        'Save the inscription of this fungi. This can be used to restore the fungi in the future.',
+      label: 'Stabilize',
+      tooltip: 'Stabilize this fungi by sendLoading it to another wallet.',
       action: () => {
-        addInscriptionToStorage()
-      }
-    })
-    list.push({
-      label: 'Stabilize Fungi',
-      tooltip: 'Stabilize this fungi by sending it to another wallet.',
-      action: () => {
-        sendModalOpen.value = true
-      }
-    })
-  } else {
-    list.push({
-      label: 'Transfer Fungi',
-      tooltip: 'Send this fungi to another wallet.',
-      action: () => {
-        sendModalOpen.value = true
+        handleStabilize()
       }
     })
   }
 
-  if (props.isOnlyInscription || props.inscription.seed.isDynamic) {
-    list.push({
-      label: 'Send Amount',
-      tooltip: 'Send a specific amount of this fungi to another wallet.',
-      action: () => {
-        sendAmountModalOpen.value = true
-      }
-    })
-  }
+  list.push({
+    label: 'Generate',
+    tooltip: 'Destroy this fungi and generate inscriptions it.',
+    action: () => {
+      generateModalOpen.value = true
+    }
+  })
 
   return list
 })
 
+async function handleStabilize() {
+  await stabilizeInscription(props.inscription.seed.owner, props.inscription.seed.seed)
+  accountStore.reload()
+}
+
+async function handleGenerate(amounts: string[]) {
+  try {
+    generateLoading.value = true
+    await generateInscriptions(props.inscription.seed.owner, amounts, props.inscription.seed.seed)
+    accountStore.reload()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    generateLoading.value = false
+  }
+}
+
 function addInscriptionToStorage() {
   const storageSeeds = inscriptionsStorage.value.map((inscription) => inscription.seed.seed)
-  const storageInscriptions = inscriptionsStorage.value.map((inscription) => inscription.seed.extra)
-  if (
-    storageSeeds.includes(props.inscription.seed.seed) &&
-    storageInscriptions.includes(props.inscription.seed.extra)
-  )
-    return
+  if (storageSeeds.includes(props.inscription.seed.seed)) return
 
   inscriptionsStorage.value = [...inscriptionsStorage.value, ...[props.inscription]]
   addMessage('Inscription has been saved.')
@@ -85,44 +89,26 @@ function addInscriptionToStorage() {
 
 async function send(address: Address) {
   try {
-    sending.value = true
+    sendLoading.value = true
     await sendTokens(
       props.inscription.seed.owner,
       address,
       parseUnits(props.inscription.seed.seed.toString(), TOKEN_DECIMALS).toString()
     )
-    accountsStore.reload()
+    accountStore.reload()
   } catch (error) {
     console.error(error)
   } finally {
-    sending.value = false
+    sendLoading.value = false
   }
 }
-
-async function sendAmount(address: Address, amount: string) {
-  try {
-    sendingAmount.value = true
-    await sendTokens(
-      props.inscription.seed.owner,
-      address,
-      parseUnits(amount, TOKEN_DECIMALS).toString()
-    )
-    accountsStore.reload()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    sendingAmount.value = false
-  }
-}
-
-onMounted(() => {})
 </script>
 
 <template>
   <div class="relative group">
     <div v-html="inscription.svg" />
     <div
-      class="absolute top-0 left-0 p-4 w-full opacity-0 group-hover:opacity-100 space-y-2 transition-all duration-300 ease-in-out"
+      class="absolute bottom-10 left-0 p-4 w-full opacity-0 group-hover:opacity-100 space-y-2 transition-all duration-300 ease-in-out"
     >
       <div
         v-for="(action, i) in actions"
@@ -131,35 +117,33 @@ onMounted(() => {})
         :data-tip="action.tooltip"
         @click="action.action"
       >
-        <button class="btn w-full !gap-0">
+        <button class="btn btn-sm w-full !gap-0">
           {{ action.label }}
           <i-icon-info class="ml-2" />
         </button>
       </div>
     </div>
 
-    <div class="px-3 py-2 border-x border-b border-dashed border-opacity-50">
-      <div class="text-md">
+    <div class="px-3 py-2 border-x border-b">
+      <div class="text-md flex items-center gap-1">
         {{ inscription.seed.isDynamic ? 'Dynamic Fungi' : 'Stable Fungi' }}
         {{ inscription.seed.seed }}
+        <img src="@/../public/favicon1.png" alt="fungi" class="w-6 h-6 -mt-0.5" />
       </div>
 
       <ModalSend
-        v-if="filteredAddresses"
         :open="sendModalOpen"
-        :filtered-addresses="filteredAddresses"
-        :sending="sending"
+        :loading="sendLoading"
         @send="send"
         @close="sendModalOpen = false"
       />
-      <ModalSend
-        v-if="filteredAddresses"
-        :open="sendAmountModalOpen"
-        :filtered-addresses="filteredAddresses"
-        :sending="sendingAmount"
-        :max-amount="inscription.seed.seed.toString()"
-        @send="sendAmount"
-        @close="sendAmountModalOpen = false"
+
+      <ModalGenerate
+        :open="generateModalOpen"
+        :loading="generateLoading"
+        :inscription="inscription"
+        @close="generateModalOpen = false"
+        @generate="handleGenerate"
       />
     </div>
   </div>
