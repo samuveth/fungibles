@@ -2,20 +2,20 @@
 import { useAccount } from 'use-wagmi'
 import { formatUnits } from 'viem'
 import { TOKEN_DECIMALS } from '@/helpers/constants'
-import { useAccountStore } from '@/stores/account'
-import { combineInscriptions, stabilizeInscription } from '@/helpers/utils'
 
 const accountStore = useAccountStore()
 const { address } = useAccount()
+const { combineInscriptions, generateInscriptions } = useTransaction()
 
-const initialized = ref(false)
-const loading = ref(false)
 const showCombineMultipleModal = ref(false)
+const generateModalOpen = ref(false)
 
 const balance = computed(() => {
   if (!accountStore.balanceUnits) return '0'
   return formatUnits(accountStore.balanceUnits, TOKEN_DECIMALS)
 })
+
+const dynamicInscription = computed(() => accountStore.inscriptions.find((i) => i.seed.isDynamic))
 
 const hasLessThanOneInscription = computed(() => accountStore.inscriptions.length < 2)
 
@@ -23,18 +23,7 @@ const actions = computed(() => {
   const list = []
 
   list.push({
-    label: 'Combine All',
-    tooltip: hasLessThanOneInscription.value
-      ? 'Requires two inscriptions'
-      : 'Combine all inscriptions into one',
-    disabled: hasLessThanOneInscription.value,
-    action: () => {
-      combineAll(accountStore.inscriptions.reduce((acc, i) => acc + Number(i.seed.seed), 0))
-    }
-  })
-
-  list.push({
-    label: 'Combine Multiple',
+    label: 'Combine Inscriptions',
     tooltip: hasLessThanOneInscription.value ? 'Requires two inscriptions' : null,
     disabled: hasLessThanOneInscription.value,
     action: () => {
@@ -42,41 +31,45 @@ const actions = computed(() => {
     }
   })
 
+  list.push({
+    label: 'Generate Inscriptions',
+    tooltip: generateTooltip.value,
+    action: () => {
+      generateModalOpen.value = true
+    },
+    disabled: !dynamicInscription.value || dynamicInscription.value.seed.seed < 2n
+  })
+
   return list
 })
 
-async function combine(amounts: string[]) {
+const generateTooltip = computed(() => {
+  if (!dynamicInscription.value) return 'No dynamic inscription found'
+  if (dynamicInscription.value.seed.seed < 2n) return 'Minimum dynamic 2'
+  return null
+})
+
+async function handleCombine(amounts: bigint[]) {
   if (!address.value) return
-  try {
-    loading.value = true
-    await combineInscriptions(address.value, amounts)
-    accountStore.reload()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    showCombineMultipleModal.value = false
-    loading.value = false
-  }
+
+  showCombineMultipleModal.value = false
+  await combineInscriptions(address.value, amounts)
 }
 
-async function combineAll(amount: number) {
-  if (!address.value) return
-  try {
-    loading.value = true
-    await stabilizeInscription(address.value, amount.toString())
-    accountStore.reload()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    loading.value = false
-  }
+async function handleGenerate(amounts: string[]) {
+  if (!dynamicInscription.value) return
+  generateModalOpen.value = false
+  await generateInscriptions(
+    dynamicInscription.value.seed.owner,
+    amounts,
+    dynamicInscription.value.seed.seed
+  )
 }
 
 watch(
   address,
   async () => {
-    if (address.value) await accountStore.init(address.value)
-    initialized.value = true
+    if (address.value) accountStore.init(address.value)
   },
   { immediate: true }
 )
@@ -91,7 +84,7 @@ watch(
           {{ accountStore.inscriptions.length }}
         </div>
         <div class="text-md">
-          <span class="opacity-60">$FUNGI</span>
+          <span class="opacity-60">BALANCE</span>
           {{ balance }}
         </div>
       </div>
@@ -114,7 +107,7 @@ watch(
       </div>
     </div>
     <div class="mt-4">
-      <div v-if="!initialized" class="justify-center flex">
+      <div v-if="!accountStore.initialized" class="justify-center flex">
         <span class="loading loading-spinner loading-sm"></span>
       </div>
       <div v-else-if="!accountStore.inscriptions.length" class="flex flex-col items-center gap-2">
@@ -126,10 +119,16 @@ watch(
 
     <ModalCombine
       :open="showCombineMultipleModal"
-      :loading="loading"
       :inscriptions="accountStore.inscriptions"
       @close="showCombineMultipleModal = false"
-      @combine="combine"
+      @combine="handleCombine"
+    />
+    <ModalGenerate
+      v-if="dynamicInscription"
+      :open="generateModalOpen"
+      :inscription="dynamicInscription"
+      @close="generateModalOpen = false"
+      @generate="handleGenerate"
     />
   </div>
 </template>

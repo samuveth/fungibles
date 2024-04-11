@@ -14,13 +14,13 @@ const modalWidth = computed(() => {
 </script>
 
 <template>
-  <dialog class="modal" :class="{ 'modal-open': open }">
+  <dialog class="modal modal-bottom sm:modal-middle" :class="{ 'modal-open': open }">
     <div class="modal-box" :class="modalWidth">
       <button
         class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
         @click="$emit('close')"
       >
-        <i-hi-x-mark-20-solid />
+        <i-hi-x-mark-20-solid class="text-lg" />
       </button>
       <h3 class="font-bold text-lg">{{ title }}</h3>
       <div class="mt-6">

@@ -3,7 +3,6 @@ import { type Inscription } from '@/helpers/types'
 
 defineProps<{
   open: boolean
-  loading: boolean
   inscriptions: Inscription[]
 }>()
 
@@ -51,8 +50,7 @@ function handleCombine() {
       :disabled="!selectedInscription.length"
       @click="handleCombine()"
     >
-      <span v-if="loading" class="loading loading-spinner loading-sm"></span>
-      <span v-else> Combine </span>
+      <span> Combine </span>
     </button>
   </BaseModal>
 </template>
