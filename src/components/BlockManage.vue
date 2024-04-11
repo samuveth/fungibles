@@ -45,9 +45,8 @@ const actions = computed(() => {
 
 const generateTooltip = computed(() => {
   if (!dynamicInscription.value) return 'No dynamic inscription found'
-  if (dynamicInscription.value.seed.seed < 2n)
-    return 'Dynamic inscription seed must be greater than 1'
-  return 'Use the dynamic inscription to generate other inscriptions.'
+  if (dynamicInscription.value.seed.seed < 2n) return 'Minimum dynamic 2'
+  return null
 })
 
 async function handleCombine(amounts: bigint[]) {
