@@ -4,13 +4,13 @@ import { type Inscription } from '@/helpers/types'
 const props = defineProps<{
   open: boolean
   inscription: Inscription
-  loading: boolean
 }>()
 
 const emit = defineEmits(['close', 'generate'])
 
-const selectedStrategy = ref('range')
+const selectedStrategy = ref('single')
 const range = ref(['', ''])
+const singleAmount = ref('')
 
 const generatedRange = computed(() => {
   return range.value[0] && range.value[1]
@@ -28,8 +28,14 @@ const validationMessages = computed(() => {
     }
     const rangeTotalSum = generatedRange.value.reduce((acc, curr) => acc + Number(curr), 0)
     if (Number(props.inscription.seed.seed) < rangeTotalSum) {
-      return ['The sum of the range must be less than the seed']
+      return [
+        `The sum of the range (${rangeTotalSum}) must be less than the seed (${props.inscription.seed.seed})`
+      ]
     }
+  }
+  if (selectedStrategy.value === 'single') {
+    if (Number(singleAmount.value) >= Number(props.inscription.seed.seed))
+      return ['The amount must be less than the dynamic inscription seed']
   }
   return []
 })
@@ -42,7 +48,8 @@ const amounts = computed(() => {
 })
 
 function handleGenerate() {
-  emit('generate', amounts.value)
+  if (selectedStrategy.value === 'single') emit('generate', [singleAmount.value.toString()])
+  if (selectedStrategy.value === 'range') emit('generate', amounts.value)
 }
 </script>
 
@@ -54,9 +61,18 @@ function handleGenerate() {
           <span class="label-text">Select Strategy</span>
         </div>
         <select v-model="selectedStrategy" class="select select-bordered select-sm">
+          <option value="single">Single</option>
           <option value="range">Range</option>
         </select>
       </label>
+      <div v-if="selectedStrategy === 'single'" class="flex gap-2 mt-2">
+        <input
+          v-model="singleAmount"
+          type="number"
+          placeholder="100"
+          class="input input-sm input-bordered w-full"
+        />
+      </div>
       <div v-if="selectedStrategy === 'range'" class="flex gap-2 mt-2">
         <input
           v-model="range[0]"
@@ -80,8 +96,7 @@ function handleGenerate() {
       :disabled="!!validationMessages[0]"
       @click="handleGenerate()"
     >
-      <span v-if="loading" class="loading loading-spinner loading-sm"></span>
-      <span v-else> Generate </span>
+      <span> Generate </span>
     </button>
   </BaseModal>
 </template>

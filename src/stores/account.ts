@@ -11,10 +11,12 @@ import { type Inscription } from '@/helpers/types'
 export const useAccountStore = defineStore('account', () => {
   const inscriptions = ref<Inscription[]>([])
   const balanceUnits = ref<bigint>(0n)
+  const initialized = ref(false)
 
   const { address } = useAccount()
 
   async function init(address: Address) {
+    initialized.value = false
     balanceUnits.value = (await readContract(config, {
       abi,
       address: TOKEN_ADDRESS,
@@ -22,6 +24,7 @@ export const useAccountStore = defineStore('account', () => {
       args: [address]
     })) as bigint
     inscriptions.value = await getInscriptionsByAddress(address)
+    initialized.value = true
   }
 
   function reload() {
@@ -29,5 +32,5 @@ export const useAccountStore = defineStore('account', () => {
     init(address.value)
   }
 
-  return { inscriptions, balanceUnits, init, reload }
+  return { inscriptions, balanceUnits, initialized, init, reload }
 })

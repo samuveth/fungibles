@@ -3,7 +3,6 @@ import { isAddress } from 'viem'
 
 defineProps<{
   open: boolean
-  loading: boolean
 }>()
 
 const emit = defineEmits(['close', 'send'])
@@ -16,7 +15,7 @@ function handleSend() {
 </script>
 
 <template>
-  <BaseModal title="Generation Settings" :open="open" @close="$emit('close')">
+  <BaseModal title="Send Inscription" :open="open" @close="$emit('close')">
     <div class="mb-4">
       <input
         v-model="addressInput"
@@ -31,8 +30,7 @@ function handleSend() {
       :disabled="!isAddress(addressInput.toLowerCase())"
       @click="handleSend()"
     >
-      <span v-if="loading" class="loading loading-spinner loading-sm"></span>
-      <span v-else> Send </span>
+      <span> Send </span>
     </button>
   </BaseModal>
 </template>

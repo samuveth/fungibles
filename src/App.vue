@@ -3,12 +3,12 @@ import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
 import { useStorage } from '@vueuse/core'
 import { connectors } from '@/helpers/wagmiConfig'
 import { shortenAddress } from '@/helpers/utils'
-import { type Inscription } from '@/helpers/types'
+import { type InscriptionNoBigint } from '@/helpers/types'
 
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
 const { connect, isSuccess } = useConnect()
-const inscriptionsStorage = useStorage<Inscription[]>('fungibles-inscriptions', [])
+const inscriptionsStorage = useStorage<InscriptionNoBigint[]>('fungibles-inscriptions', [])
 
 const modalOpen = ref(false)
 const favoritesModalOpen = ref(false)
@@ -36,20 +36,14 @@ watch(isSuccess, (value) => {
     modalOpen.value = false
   }
 })
-
-// function isMobile() {
-//   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
 </script>
 
 <template>
   <header>
     <nav class="flex justify-between items-center px-4 py-3 border-b">
-      <h1 class="text-lg">fungibles.xyz</h1>
+      <RouterLink to="/">
+        <button class="text-lg">fungibles.xyz</button>
+      </RouterLink>
       <div class="flex items-center gap-2">
         <button
           v-if="!address"
@@ -82,6 +76,11 @@ watch(isSuccess, (value) => {
       Saved Inscriptions
     </button>
     <div class="flex gap-2">
+      <RouterLink to="/about">
+        <button class="btn btn-outline btn-sm border-0">
+          <i-icon-info class="text-[16px]" />
+        </button>
+      </RouterLink>
       <a
         href="https://github.com/samuveth/fungibles"
         target="_blank"
@@ -132,4 +131,8 @@ watch(isSuccess, (value) => {
       </li>
     </ul>
   </BaseModal>
+
+  <ModalTransactionSpending />
+  <ModalTransactionPending />
+  <ModalTransactionConfirm />
 </template>

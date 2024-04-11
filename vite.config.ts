@@ -24,7 +24,7 @@ export default defineConfig({
     }),
     AutoImport({
       imports: ['vue', 'vue-router'],
-      dirs: ['./src/composables'],
+      dirs: ['./src/composables', './src/stores'],
       eslintrc: {
         enabled: true
       }
