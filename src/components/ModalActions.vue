@@ -49,7 +49,6 @@ function handleAction(action: string) {
 
 <template>
   <BaseModal title="Choose Action" :open="open" @close="$emit('close')">
-    <ImagePng v-if="open" :svgString="inscription.svg" />
     <div class="space-y-2 mt-4">
       <div v-for="(action, i) in actions" :key="i">
         <button

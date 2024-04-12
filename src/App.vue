@@ -40,9 +40,9 @@ watch(isSuccess, (value) => {
 
 <template>
   <header>
-    <nav class="flex justify-between items-center px-4 py-3 border-b">
+    <nav class="flex justify-between items-center p-2 border-b">
       <RouterLink to="/">
-        <button class="text-lg">fungibles.xyz</button>
+        <button class="text-xl pl-1.5">fungibles.xyz</button>
       </RouterLink>
       <div class="flex items-center gap-2">
         <button
@@ -70,15 +70,14 @@ watch(isSuccess, (value) => {
 
   <RouterView />
 
-  <footer class="fixed bottom-0 left-0 right-0 py-3 px-4 border-t bg-base-100 flex justify-between">
+  <footer class="fixed bottom-0 left-0 right-0 p-2 border-t bg-base-100 flex justify-between">
     <button class="btn btn-outline btn-sm border-0" @click="favoritesModalOpen = true">
-      <i-icon-heart class="text-md" />
-      Saved Inscriptions
+      <i-hi-heart-solid class="text-md" />
     </button>
     <div class="flex gap-2">
       <RouterLink to="/about">
         <button class="btn btn-outline btn-sm border-0">
-          <i-icon-info class="text-[16px]" />
+          <i-hi-information-circle class="text-[16px]" />
         </button>
       </RouterLink>
       <a
@@ -86,7 +85,7 @@ watch(isSuccess, (value) => {
         target="_blank"
         class="btn btn-outline btn-sm border-0"
       >
-        <i-icon-github class="text-md" />
+        <i-icon-github class="text-lg" />
       </a>
       <a
         href="https://twitter.com/samsamlantan"
@@ -125,7 +124,6 @@ watch(isSuccess, (value) => {
             <div class="mt-0.5">
               {{ inscription.seed.seed }}
             </div>
-            <img src="@/../public/favicon1.png" alt="fungi" class="w-6 h-6" />
           </div>
         </div>
       </li>

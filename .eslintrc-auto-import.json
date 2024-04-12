@@ -68,9 +68,10 @@
     "watchEffect": true,
     "watchPostEffect": true,
     "watchSyncEffect": true,
-    "useAccountStore": true,
+    "useTokenStore": true,
     "useModalStore": true,
     "useToastStore": true,
-    "useTransaction": true
+    "useTransaction": true,
+    "useInscription": true
   }
 }

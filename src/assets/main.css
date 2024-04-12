@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Chakra+Petch');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Modern DOS';
-  src: url('./modern-dos.ttf');
+* {
+  @apply antialiased;
+  font-family: 'Chakra Petch', sans-serif;
 }
 
-* {
-  font-family: 'Modern DOS', sans-serif;
+.btn {
+  @apply font-normal;
 }

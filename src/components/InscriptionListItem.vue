@@ -2,7 +2,6 @@
 import { type Address, parseUnits } from 'viem'
 import { type InscriptionNoBigint, type Inscription } from '@/helpers/types'
 import { useStorage } from '@vueuse/core'
-import { TOKEN_DECIMALS } from '@/helpers/constants'
 
 const props = defineProps<{
   inscription: Inscription
@@ -12,6 +11,7 @@ const props = defineProps<{
 const { addMessage } = useToastStore()
 const inscriptionsStorage = useStorage<InscriptionNoBigint[]>('fungibles-inscriptions', [])
 const { sendTokens, stabilizeInscription } = useTransaction()
+const tokenStore = useTokenStore()
 
 const sendModalOpen = ref(false)
 const actionModalOpen = ref(false)
@@ -26,7 +26,7 @@ async function send(address: Address) {
   await sendTokens(
     props.inscription.seed.owner,
     address,
-    parseUnits(props.inscription.seed.seed.toString(), TOKEN_DECIMALS).toString()
+    parseUnits(props.inscription.seed.seed.toString(), tokenStore.tokenDecimals).toString()
   )
 }
 
@@ -69,15 +69,17 @@ function handleAction(action: string) {
 
 <template>
   <button
-    class="relative group hover:scale-[102%] transition-all duration-200 w-full"
+    class="relative group hover:scale-[102%] transition-all duration-300 w-full rounded-t overflow-hidden"
     @click="actionModalOpen = true"
   >
     <ImagePng :svgString="inscription.svg" />
 
-    <div class="px-3 py-2 border-x border-b">
-      <div class="text-md flex items-center gap-1">
-        {{ inscription.seed.isDynamic ? 'Dynamic Inscription' : 'Stable Inscription' }}
-        {{ inscription.seed.seed }}
+    <div class="px-3 py-2 border-x border-b rounded-b">
+      <div class="sm:flex justify-between items-center">
+        <div class="font-semibold">
+          {{ inscription.seed.seed }}
+          {{ tokenStore.tokenInfo?.symbol }}
+        </div>
       </div>
     </div>
   </button>

@@ -1,13 +1,13 @@
 import { readContract, writeContract, waitForTransactionReceipt } from '@wagmi/core'
 import { type Address, type Hash, parseUnits } from 'viem'
-import { TOKEN_ADDRESS, STABILIZER_ADDRESS, TOKEN_DECIMALS } from '@/helpers/constants'
+import { STABILIZER_ADDRESS } from '@/helpers/constants'
 import abi from '@/helpers/abi/fungi.json'
 import { config } from '@/helpers/wagmiConfig'
 import stabilizeAbi from '@/helpers/abi/stabilizer.json'
 
 export function useTransaction() {
   const modalStore = useModalStore()
-  const accountStore = useAccountStore()
+  const tokenStore = useTokenStore()
 
   function addTransaction(transaction: Hash) {
     modalStore.pendingOpen = true
@@ -24,7 +24,7 @@ export function useTransaction() {
     try {
       const result = await writeContract(config, {
         abi,
-        address: TOKEN_ADDRESS,
+        address: tokenStore.tokenAddress,
         functionName: 'approve',
         args: [STABILIZER_ADDRESS, amount]
       })
@@ -46,7 +46,7 @@ export function useTransaction() {
   async function checkAllowance(owner: Address, amount: bigint) {
     const result = (await readContract(config, {
       abi,
-      address: TOKEN_ADDRESS,
+      address: tokenStore.tokenAddress,
       functionName: 'allowance',
       args: [owner, STABILIZER_ADDRESS]
     })) as bigint
@@ -58,7 +58,7 @@ export function useTransaction() {
 
   async function stabilizeInscription(owner: Address, amount: bigint) {
     try {
-      const parsedAmount = parseUnits(amount.toString(), TOKEN_DECIMALS)
+      const parsedAmount = parseUnits(amount.toString(), tokenStore.tokenDecimals)
 
       await checkAllowance(owner, parsedAmount)
       modalStore.confirmOpen = true
@@ -73,7 +73,7 @@ export function useTransaction() {
       await waitForTransactionReceipt(config, {
         hash: result
       })
-      accountStore.reload()
+      tokenStore.reload()
     } catch (e) {
       console.error(e)
     } finally {
@@ -84,8 +84,8 @@ export function useTransaction() {
 
   async function generateInscriptions(owner: Address, amounts: string[], sendAmount: bigint) {
     try {
-      const parsedAmounts = amounts.map((amount) => parseUnits(amount, TOKEN_DECIMALS))
-      const parsedSendAmount = parseUnits(sendAmount.toString(), TOKEN_DECIMALS)
+      const parsedAmounts = amounts.map((amount) => parseUnits(amount, tokenStore.tokenDecimals))
+      const parsedSendAmount = parseUnits(sendAmount.toString(), tokenStore.tokenDecimals)
 
       const amountsTotal = parsedAmounts.reduce((acc, amount) => acc + amount, 0n)
 
@@ -102,7 +102,7 @@ export function useTransaction() {
       await waitForTransactionReceipt(config, {
         hash: result
       })
-      accountStore.reload()
+      tokenStore.reload()
     } catch (e) {
       console.error(e)
     } finally {
@@ -113,7 +113,9 @@ export function useTransaction() {
 
   async function combineInscriptions(owner: Address, amounts: bigint[]) {
     try {
-      const parsedAmounts = amounts.map((amount) => parseUnits(amount.toString(), TOKEN_DECIMALS))
+      const parsedAmounts = amounts.map((amount) =>
+        parseUnits(amount.toString(), tokenStore.tokenDecimals)
+      )
 
       const amountsTotal = parsedAmounts.reduce((acc, amount) => acc + amount, 0n)
 
@@ -130,7 +132,7 @@ export function useTransaction() {
       await waitForTransactionReceipt(config, {
         hash: result
       })
-      accountStore.reload()
+      tokenStore.reload()
     } catch (e) {
       console.error(e)
     } finally {
@@ -144,7 +146,7 @@ export function useTransaction() {
       modalStore.confirmOpen = true
       const result = await writeContract(config, {
         abi,
-        address: TOKEN_ADDRESS,
+        address: tokenStore.tokenAddress,
         functionName: 'transfer',
         args: [to, amount],
         account: from
@@ -154,7 +156,7 @@ export function useTransaction() {
       await waitForTransactionReceipt(config, {
         hash: result
       })
-      accountStore.reload()
+      tokenStore.reload()
     } catch (e) {
       console.error(e)
     } finally {
