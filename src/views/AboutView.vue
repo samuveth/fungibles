@@ -12,8 +12,8 @@
         <h3>Upcoming features:</h3>
         <ul class="list-disc list-inside">
           <li>Support for any ERC-20i token with a discovery page</li>
-          <li>More fungi management features</li>
-          <li>Gamified fungi generation</li>
+          <li>More management features</li>
+          <li>Gamified generation</li>
           <li>... and more!</li>
         </ul>
 
