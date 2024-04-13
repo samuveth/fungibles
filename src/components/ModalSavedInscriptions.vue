@@ -3,8 +3,16 @@ import { useStorage } from '@vueuse/core'
 import { type InscriptionNoBigint } from '@/helpers/types'
 
 const modalStore = useModalStore()
+const tokenStore = useTokenStore()
 
-const inscriptionsStorage = useStorage<InscriptionNoBigint[]>('fungibles-inscriptions', [])
+const inscriptionsStorage = useStorage<Record<string, InscriptionNoBigint[]>>(
+  'fungibles-inscriptions',
+  {}
+)
+
+const inscriptionsStorageByToken = computed(
+  () => inscriptionsStorage.value[tokenStore.tokenAddress] ?? []
+)
 </script>
 
 <template>
@@ -14,10 +22,10 @@ const inscriptionsStorage = useStorage<InscriptionNoBigint[]>('fungibles-inscrip
     width="lg"
     @close="modalStore.savedInscriptionsOpen = false"
   >
-    <div v-if="!inscriptionsStorage.length">No saved inscriptions found</div>
+    <div v-if="!inscriptionsStorageByToken.length">No saved inscriptions found</div>
     <div v-else class="grid sm:grid-cols-3 gap-4">
       <BaseInscription
-        v-for="(inscription, i) in inscriptionsStorage"
+        v-for="(inscription, i) in inscriptionsStorageByToken"
         :key="i"
         :inscription="inscription"
       />

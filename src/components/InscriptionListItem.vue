@@ -9,9 +9,12 @@ const props = defineProps<{
 }>()
 
 const { addMessage } = useToastStore()
-const inscriptionsStorage = useStorage<InscriptionNoBigint[]>('fungibles-inscriptions', [])
-const { sendTokens, stabilizeInscription } = useTransaction()
 const tokenStore = useTokenStore()
+const inscriptionsStorage = useStorage<Record<string, InscriptionNoBigint[]>>(
+  'fungibles-inscriptions',
+  {}
+)
+const { sendTokens, stabilizeInscription } = useTransaction()
 
 const sendModalOpen = ref(false)
 const actionModalOpen = ref(false)
@@ -31,9 +34,10 @@ async function send(address: Address) {
 }
 
 function addInscriptionToStorage() {
-  const storageSeeds = inscriptionsStorage.value.map((inscription) =>
-    inscription.seed.seed.toString()
-  )
+  const storageSeeds =
+    inscriptionsStorage.value[tokenStore.tokenAddress]?.map(
+      (inscription) => inscription.seed.seed
+    ) ?? []
   if (storageSeeds.includes(props.inscription.seed.seed.toString())) {
     addMessage('Inscription is already saved.')
     return
@@ -48,7 +52,10 @@ function addInscriptionToStorage() {
     }
   }
 
-  inscriptionsStorage.value = [...inscriptionsStorage.value, ...[inscriptionToString]]
+  inscriptionsStorage.value[tokenStore.tokenAddress] = [
+    ...(inscriptionsStorage.value[tokenStore.tokenAddress] ?? []),
+    ...[inscriptionToString]
+  ]
   addMessage('Inscription has been saved.')
 }
 

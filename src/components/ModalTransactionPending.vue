@@ -4,7 +4,7 @@ const modalStore = useModalStore()
 
 <template>
   <BaseModal
-    title=" Approving Transaction"
+    title="Approving Transaction"
     :open="modalStore.pendingOpen"
     @close="modalStore.pendingOpen = false"
   >
