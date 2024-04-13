@@ -3,7 +3,7 @@ const tokenStore = useTokenStore()
 </script>
 
 <template>
-  <div v-if="tokenStore.tokenInfo?.name" class="text breadcrumbs">
+  <div class="text breadcrumbs">
     <ul>
       <li><RouterLink to="/"> Home </RouterLink></li>
       <li>

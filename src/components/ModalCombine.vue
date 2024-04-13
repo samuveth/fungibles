@@ -60,7 +60,7 @@ function handleCombine() {
     </div>
     <button
       class="btn btn-primary w-full"
-      :disabled="!combineAll && !selectedInscription.length"
+      :disabled="!combineAll && selectedInscription.length < 2"
       @click="handleCombine()"
     >
       <span> Combine </span>

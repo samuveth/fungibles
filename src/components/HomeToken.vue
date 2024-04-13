@@ -138,7 +138,7 @@ watch(
         </a>
       </div>
     </div>
-    <div class="sm:flex gap-2 space-y-2 pt-4 sm:mt-0 sm:space-y-0">
+    <div class="sm:flex gap-2 space-y-2 pt-4 sm:mt-0 sm:space-y-0 mb-4">
       <div
         v-for="(action, i) in actions"
         :key="i"
@@ -154,40 +154,39 @@ watch(
         </button>
       </div>
     </div>
-    <div class="mt-4">
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
-      </div>
-      <div v-if="tokenStore.initializing" class="justify-center flex">
-        <span class="loading loading-spinner loading-sm"></span>
-      </div>
-      <div v-else-if="!address">
-        <div class="text-xl">Connect your wallet to manage your fungibles.</div>
-      </div>
-      <div v-else-if="!dynamicInscriptions.length" class="">
-        No dynamic {{ tokenStore.tokenInfo?.name }} found
-      </div>
-      <InscriptionList v-else :inscriptions="dynamicInscriptions" />
-    </div>
 
-    <div class="mt-6">
-      <div>
-        <h3 class="text-xl font-semibold mb-2">
-          Stable {{ tokenStore.tokenInfo?.name }}
-          <div class="badge badge-lg font-normal">{{ stableInscriptions.length }}</div>
-        </h3>
-      </div>
-      <div v-if="tokenStore.initializing" class="justify-center flex">
-        <span class="loading loading-spinner loading-sm"></span>
-      </div>
-      <div v-else-if="!address">
-        <div class="text-xl">Connect your wallet to manage your fungibles.</div>
-      </div>
-      <div v-else-if="!stableInscriptions.length" class="">
-        No stable {{ tokenStore.tokenInfo?.name }} found
-      </div>
-      <InscriptionList v-else :inscriptions="stableInscriptions" />
+    <div v-if="tokenStore.initializing" class="justify-center flex">
+      <span class="loading loading-spinner loading-sm"></span>
     </div>
+    <div v-else-if="!address">
+      <div class="text-xl">Connect your wallet to manage your fungibles.</div>
+    </div>
+    <template v-else>
+      <div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
+        </div>
+
+        <div v-if="!dynamicInscriptions.length" class="">
+          No dynamic {{ tokenStore.tokenInfo?.name }} found
+        </div>
+        <InscriptionList v-else :inscriptions="dynamicInscriptions" />
+      </div>
+
+      <div class="mt-6">
+        <div>
+          <h3 class="text-xl font-semibold mb-2">
+            Stable {{ tokenStore.tokenInfo?.name }}
+            <div class="badge badge-lg font-normal">{{ stableInscriptions.length }}</div>
+          </h3>
+        </div>
+
+        <div v-if="!stableInscriptions.length" class="">
+          No stable {{ tokenStore.tokenInfo?.name }} found
+        </div>
+        <InscriptionList v-else :inscriptions="stableInscriptions" />
+      </div>
+    </template>
 
     <ModalCombine
       :open="showCombineMultipleModal"
