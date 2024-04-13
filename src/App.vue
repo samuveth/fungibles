@@ -42,7 +42,7 @@ watch(isSuccess, (value) => {
   <header>
     <nav class="flex justify-between items-center p-2 border-b">
       <RouterLink to="/">
-        <button class="text-xl pl-1.5">fungibles.xyz</button>
+        <button class="text-xl pl-1.5">fungibles</button>
       </RouterLink>
       <div class="flex items-center gap-2">
         <button

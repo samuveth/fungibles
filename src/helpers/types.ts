@@ -25,3 +25,17 @@ export type InscriptionNoBigint = {
   seed: SeedNoBigint
   meta: Record<string, any>
 }
+
+export type Token = {
+  name: string
+  about: string
+  symbol: string
+  logo: string
+  banner: string
+  address: string
+  pairAddress: string
+  decimals: number
+  website?: string
+  twitter?: string
+  telegram?: string
+}

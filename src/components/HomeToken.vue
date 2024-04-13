@@ -2,6 +2,7 @@
 import { useAccount } from 'use-wagmi'
 import IconX from '~icons/icon/x'
 import IconTelegram from '~icons/icon/telegram'
+import IconDexscreener from '~icons/icon/dexscreener'
 import IconGlobeAlt from '~icons/heroicons/globe-alt-solid'
 
 const tokenStore = useTokenStore()
@@ -95,6 +96,13 @@ const projectSocials = computed(() => {
       size: 'text-[22px]'
     })
   }
+  if (tokenStore.tokenInfo.pairAddress) {
+    list.push({
+      icon: IconDexscreener,
+      link: `https://dexscreener.com/base/${tokenStore.tokenInfo.pairAddress}`,
+      size: 'text-[16px]'
+    })
+  }
 
   return list
 })
@@ -116,7 +124,7 @@ watch(
 <template>
   <div>
     <div class="sm:flex justify-between px-4 py-5 bg-base-200 rounded">
-      <h2 class="text-xl flex items-center gap-2">
+      <h2 class="text-xl flex items-center gap-2 pl-0.5">
         <img :src="tokenStore.tokenInfo?.logo" class="w-[24px] h-[24px] rounded-full" />
         <span class="font-semibold"> {{ tokenStore.tokenInfo?.name }} </span>
         / {{ tokenStore.tokenInfo?.symbol }}
@@ -126,13 +134,13 @@ watch(
         </button> -->
       </h2>
 
-      <div class="flex items-center justify-end -mr-2">
+      <div class="flex items-center justify-end -mr-1">
         <a
           v-for="(social, i) in projectSocials"
           :href="social.link"
           target="_blank"
           :key="i"
-          class="btn btn-outline border-0 btn-sm px-3 hover:bg-transparent hover:text-primary"
+          class="btn btn-outline border-0 btn-sm px-2 hover:bg-transparent hover:text-primary"
         >
           <component :is="social.icon" :class="social.size" />
         </a>
