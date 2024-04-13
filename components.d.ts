@@ -7,11 +7,13 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BaseInscription: typeof import('./src/components/BaseInscription.vue')['default']
     BaseModal: typeof import('./src/components/BaseModal.vue')['default']
     HomeBreadcrumbs: typeof import('./src/components/HomeBreadcrumbs.vue')['default']
     HomeDiscoverListItem: typeof import('./src/components/HomeDiscoverListItem.vue')['default']
     HomeToken: typeof import('./src/components/HomeToken.vue')['default']
     IHiArrowTopRightOnSquare16Solid: typeof import('~icons/heroicons/arrow-top-right-on-square16-solid')['default']
+    IHiHeart: typeof import('~icons/heroicons/heart')['default']
     IHiHeartSolid: typeof import('~icons/heroicons/heart-solid')['default']
     IHiInformationCircle: typeof import('~icons/heroicons/information-circle')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
@@ -23,6 +25,7 @@ declare module 'vue' {
     ModalActions: typeof import('./src/components/ModalActions.vue')['default']
     ModalCombine: typeof import('./src/components/ModalCombine.vue')['default']
     ModalGenerate: typeof import('./src/components/ModalGenerate.vue')['default']
+    ModalSavedInscriptions: typeof import('./src/components/ModalSavedInscriptions.vue')['default']
     ModalSend: typeof import('./src/components/ModalSend.vue')['default']
     ModalTransactionConfirm: typeof import('./src/components/ModalTransactionConfirm.vue')['default']
     ModalTransactionPending: typeof import('./src/components/ModalTransactionPending.vue')['default']

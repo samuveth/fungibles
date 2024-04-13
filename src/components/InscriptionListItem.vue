@@ -68,20 +68,8 @@ function handleAction(action: string) {
 </script>
 
 <template>
-  <button
-    class="relative group hover:scale-[102%] transition-all duration-300 w-full rounded-t overflow-hidden"
-    @click="actionModalOpen = true"
-  >
-    <ImagePng :svgString="inscription.svg" />
-
-    <div class="px-3 py-2 border-x border-b rounded-b">
-      <div class="sm:flex justify-between items-center">
-        <div class="font-semibold">
-          {{ inscription.seed.seed }}
-          {{ tokenStore.tokenInfo?.symbol }}
-        </div>
-      </div>
-    </div>
+  <button @click="actionModalOpen = true">
+    <BaseInscription :inscription="inscription" />
   </button>
   <ModalSend :open="sendModalOpen" @send="send" @close="sendModalOpen = false" />
 

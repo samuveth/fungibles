@@ -4,6 +4,8 @@ import IconX from '~icons/icon/x'
 import IconTelegram from '~icons/icon/telegram'
 import IconDexscreener from '~icons/icon/dexscreener'
 import IconGlobeAlt from '~icons/heroicons/globe-alt-solid'
+import IconArrowIn from '~icons/heroicons/arrows-pointing-in-solid'
+import IconArrowPath from '~icons/heroicons/arrow-path-rounded-square-solid'
 
 const tokenStore = useTokenStore()
 const { address } = useAccount()
@@ -11,6 +13,7 @@ const { combineInscriptions, generateInscriptions } = useTransaction()
 
 const showCombineMultipleModal = ref(false)
 const generateModalOpen = ref(false)
+const modalStore = useModalStore()
 
 // const balance = computed(() => {
 //   if (!tokenStore.balanceUnits) return '0'
@@ -25,8 +28,9 @@ const actions = computed(() => {
   const list = []
 
   list.push({
-    label: 'Combine Inscriptions',
-    tooltip: hasLessThanOneInscription.value ? 'Requires two inscriptions' : null,
+    label: 'Combine',
+    tooltip: hasLessThanOneInscription.value ? 'Requires two' : null,
+    icon: IconArrowIn,
     disabled: hasLessThanOneInscription.value,
     action: () => {
       showCombineMultipleModal.value = true
@@ -34,8 +38,9 @@ const actions = computed(() => {
   })
 
   list.push({
-    label: 'Generate Inscriptions',
+    label: 'Generate',
     tooltip: generateTooltip.value,
+    icon: IconArrowPath,
     action: () => {
       generateModalOpen.value = true
     },
@@ -46,8 +51,8 @@ const actions = computed(() => {
 })
 
 const generateTooltip = computed(() => {
-  if (!dynamicInscription.value) return 'No dynamic inscription found'
-  if (dynamicInscription.value.seed.seed < 2n) return 'Minimum dynamic 2'
+  if (!dynamicInscription.value) return 'Requires dynamic'
+  if (dynamicInscription.value.seed.seed < 2n) return 'Not enough tokens'
   return null
 })
 
@@ -146,7 +151,7 @@ watch(
         </a>
       </div>
     </div>
-    <div class="sm:flex gap-2 space-y-2 pt-4 sm:mt-0 sm:space-y-0 mb-4">
+    <div class="pt-4 sm:mt-0 mb-4 flex gap-2">
       <div
         v-for="(action, i) in actions"
         :key="i"
@@ -158,9 +163,14 @@ watch(
           :disabled="action.disabled"
           @click="action.action()"
         >
+          <component :is="action.icon" class="text-md" />
           {{ action.label }}
         </button>
       </div>
+      <button class="btn btn-primary" @click="modalStore.savedInscriptionsOpen = true">
+        <i-hi-heart class="text-md" />
+        <span class="hidden sm:block"> Saved </span>
+      </button>
     </div>
 
     <div v-if="tokenStore.initializing" class="justify-center flex">
@@ -172,7 +182,7 @@ watch(
     <template v-else>
       <div>
         <div>
-          <h3 class="text-xl font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
+          <h3 class="text-lg font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
         </div>
 
         <div v-if="!dynamicInscriptions.length" class="">
@@ -183,7 +193,7 @@ watch(
 
       <div class="mt-6">
         <div>
-          <h3 class="text-xl font-semibold mb-2">
+          <h3 class="text-lg font-semibold mb-2">
             Stable {{ tokenStore.tokenInfo?.name }}
             <div class="badge badge-lg font-normal">{{ stableInscriptions.length }}</div>
           </h3>
@@ -209,5 +219,10 @@ watch(
       @close="generateModalOpen = false"
       @generate="handleGenerate"
     />
+
+    <ModalTransactionSpending />
+    <ModalTransactionPending />
+    <ModalTransactionConfirm />
+    <ModalSavedInscriptions />
   </div>
 </template>

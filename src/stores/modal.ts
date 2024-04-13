@@ -5,8 +5,9 @@ export const useModalStore = defineStore('modal', () => {
   const spendingOpen = ref(false)
   const pendingOpen = ref(false)
   const confirmOpen = ref(false)
+  const savedInscriptionsOpen = ref(false)
 
   const pendingTransaction = ref<Hash>()
 
-  return { spendingOpen, confirmOpen, pendingOpen, pendingTransaction }
+  return { spendingOpen, confirmOpen, pendingOpen, pendingTransaction, savedInscriptionsOpen }
 })

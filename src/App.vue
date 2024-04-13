@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
-import { useStorage } from '@vueuse/core'
 import { connectors } from '@/helpers/wagmiConfig'
 import { shortenAddress } from '@/helpers/utils'
-import { type InscriptionNoBigint } from '@/helpers/types'
 
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
 const { connect, isSuccess } = useConnect()
-const inscriptionsStorage = useStorage<InscriptionNoBigint[]>('fungibles-inscriptions', [])
 
 const modalOpen = ref(false)
-const favoritesModalOpen = ref(false)
 
 function handleAccountClick() {
   if (isConnected.value) {
@@ -60,7 +56,6 @@ watch(isSuccess, (value) => {
             tabindex="0"
             class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li><a @click="favoritesModalOpen = true">Saved Inscriptions</a></li>
             <li><a @click="disconnect()">Disconnect</a></li>
           </ul>
         </div>
@@ -70,8 +65,11 @@ watch(isSuccess, (value) => {
 
   <RouterView />
 
-  <footer class="fixed bottom-0 left-0 right-0 p-2 border-t bg-base-100 flex justify-between">
-    <button class="btn btn-outline btn-sm border-0" @click="favoritesModalOpen = true">
+  <!-- <footer class="fixed bottom-0 left-0 right-0 p-2 border-t bg-base-100 flex justify-between">
+    <button
+      class="btn btn-outline btn-sm border-0"
+      @click="modalStore.savedInscriptionsOpen = true"
+    >
       <i-hi-heart-solid class="text-md" />
     </button>
     <div class="flex gap-2">
@@ -95,7 +93,7 @@ watch(isSuccess, (value) => {
         <i-icon-x class="text-md" />
       </a>
     </div>
-  </footer>
+  </footer> -->
 
   <TheToasts />
 
@@ -108,29 +106,4 @@ watch(isSuccess, (value) => {
       </li>
     </ul>
   </BaseModal>
-
-  <BaseModal
-    title="Saved Inscriptions"
-    :open="favoritesModalOpen"
-    width="lg"
-    @close="favoritesModalOpen = false"
-  >
-    <div v-if="!inscriptionsStorage.length">No saved inscriptions found</div>
-    <ul v-else class="w-lg grid grid-cols-3 gap-4">
-      <li v-for="(inscription, i) in inscriptionsStorage" :key="i">
-        <div v-html="inscription.svg" />
-        <div class="px-3 py-2 border-x border-b border-dashed border-opacity-50">
-          <div class="text-xl flex items-center gap-1">
-            <div class="mt-0.5">
-              {{ inscription.seed.seed }}
-            </div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </BaseModal>
-
-  <ModalTransactionSpending />
-  <ModalTransactionPending />
-  <ModalTransactionConfirm />
 </template>
