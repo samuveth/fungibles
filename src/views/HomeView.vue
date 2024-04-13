@@ -14,7 +14,7 @@ const tokenStore = useTokenStore()
       <div class="bg-base-200 rounded py-8 text-center px-4">
         <h1 class="text-4xl">fungibles</h1>
         <p class="max-w-xl mx-auto mt-4">
-          Manage all your ERC-20i tokens in one place. fungibles is a platform for creating and
+          Manage all your ERC-20i tokens in one place. fungibles is a platform for generating and
           managing fungible tokens on the Base network.
         </p>
       </div>
