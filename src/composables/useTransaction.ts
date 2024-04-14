@@ -1,7 +1,6 @@
 import { readContract, writeContract, waitForTransactionReceipt } from '@wagmi/core'
 import { type Address, type Hash, parseUnits } from 'viem'
 import { STABILIZER_ADDRESS } from '@/helpers/constants'
-import abi from '@/helpers/abi/fungi.json'
 import { config } from '@/helpers/wagmiConfig'
 import stabilizeAbi from '@/helpers/abi/stabilizer.json'
 
@@ -23,7 +22,7 @@ export function useTransaction() {
     modalStore.spendingOpen = true
     try {
       const result = await writeContract(config, {
-        abi,
+        abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
         functionName: 'approve',
         args: [STABILIZER_ADDRESS, amount]
@@ -45,7 +44,7 @@ export function useTransaction() {
 
   async function checkAllowance(owner: Address, amount: bigint) {
     const result = (await readContract(config, {
-      abi,
+      abi: tokenStore.abiComputed,
       address: tokenStore.tokenAddress,
       functionName: 'allowance',
       args: [owner, STABILIZER_ADDRESS]
@@ -66,7 +65,7 @@ export function useTransaction() {
         abi: stabilizeAbi,
         address: STABILIZER_ADDRESS,
         functionName: 'stabilize',
-        args: [parsedAmount]
+        args: [parsedAmount, tokenStore.tokenAddress]
       })
       modalStore.confirmOpen = false
       addTransaction(result)
@@ -95,7 +94,7 @@ export function useTransaction() {
         abi: stabilizeAbi,
         address: STABILIZER_ADDRESS,
         functionName: 'stabilizeMultiple',
-        args: [parsedAmounts, parsedSendAmount]
+        args: [parsedAmounts, parsedSendAmount, tokenStore.tokenAddress]
       })
       modalStore.confirmOpen = false
       addTransaction(result)
@@ -124,8 +123,8 @@ export function useTransaction() {
       const result = await writeContract(config, {
         abi: stabilizeAbi,
         address: STABILIZER_ADDRESS,
-        functionName: 'combineAndStabilize',
-        args: [parsedAmounts]
+        functionName: 'combineMultiple',
+        args: [parsedAmounts, tokenStore.tokenAddress]
       })
       modalStore.confirmOpen = false
       addTransaction(result)
@@ -145,7 +144,7 @@ export function useTransaction() {
     try {
       modalStore.confirmOpen = true
       const result = await writeContract(config, {
-        abi,
+        abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
         functionName: 'transfer',
         args: [to, amount],

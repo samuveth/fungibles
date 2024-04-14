@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { STABILIZER_ADDRESS } from '@/helpers/constants'
+
 const modalStore = useModalStore()
 </script>
 
@@ -24,7 +26,7 @@ const modalStore = useModalStore()
             <div>
               Checkout the contract code
               <a
-                href="https://basescan.org/address/0x121805b1d9E97CC041BDA927cCf1c651467E1BD5#code"
+                :href="`https://basescan.org/address/${STABILIZER_ADDRESS}#code`"
                 target="_blank"
                 class="underline"
                 >here</a

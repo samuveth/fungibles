@@ -12,14 +12,6 @@ const actions = computed(() => {
   const list = []
 
   list.push({
-    label: 'Save Inscription',
-    tooltip: 'The image and amount of inscription will be saved and can be viewed later.',
-    action: () => {
-      handleAction('save')
-    }
-  })
-
-  list.push({
     label: 'Transfer Inscription',
     tooltip: 'Send this inscription to another wallet.',
     action: () => {

@@ -29,17 +29,27 @@ onMounted(async () => {
     :to="token.address"
     class="border rounded hover:scale-[102%] transition-all duration-300 overflow-hidden"
   >
-    <div class="h-[120px] bg-cover bg-center" :style="`background-image: url('${token.banner}');`">
-      <div class="w-full h-full bg-black bg-opacity-60 p-4 text-white">
-        <div class="flex items-center gap-2">
-          <img :src="token.logo" class="w-[24px] h-[24px] rounded-full" />
+    <div
+      class="h-[120px] bg-cover bg-center relative"
+      :style="
+        token.banner.startsWith('#')
+          ? `background-color: ${token.banner}`
+          : `background-image: url('${token.banner}');`
+      "
+    >
+      <div class="w-full h-full bg-black bg-opacity-60 px-3 py-3 text-white">
+        <div class="flex items-start gap-2">
+          <img :src="token.logo" class="w-[24px] h-[24px] rounded-full mt-0.5" />
           <h3 class="text-xl">
             <span class="font-semibold"> {{ token.name }} </span>
             <span> / {{ token.symbol }} </span>
           </h3>
         </div>
 
-        <div v-if="tokenPair" class="mt-7 flex flex-col items-end font-semibold">
+        <div
+          v-if="tokenPair"
+          class="absolute bottom-3 right-4 flex flex-col items-end font-semibold"
+        >
           <div class="leading-4">${{ tokenPair.priceUsd }}</div>
           <div
             class="text-xs"
@@ -54,7 +64,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <div class="px-4 py-3">
+    <div class="px-3 py-2 leading-5 text-sm">
       {{ token.about }}
     </div>
   </RouterLink>

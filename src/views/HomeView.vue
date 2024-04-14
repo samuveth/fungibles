@@ -17,7 +17,7 @@ const tokenStore = useTokenStore()
       </div>
       <div class="mt-6">
         <h2 class="text-xl font-semibold">Discover</h2>
-        <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-2">
+        <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-2 gap-4">
           <HomeDiscoverListItem v-for="token in tokens" :key="token.address" :token="token" />
         </div>
       </div>

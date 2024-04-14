@@ -1,18 +1,19 @@
 [
   {
-    "inputs": [{ "internalType": "contract IERC20", "name": "_tokenAddress", "type": "address" }],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "inputs": [{ "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }],
-    "name": "combineAndStabilize",
+    "inputs": [
+      { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
+      { "internalType": "contract IERC20", "name": "token", "type": "address" }
+    ],
+    "name": "combineMultiple",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "contract IERC20", "name": "token", "type": "address" }
+    ],
     "name": "stabilize",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -21,18 +22,12 @@
   {
     "inputs": [
       { "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" },
-      { "internalType": "uint256", "name": "balance", "type": "uint256" }
+      { "internalType": "uint256", "name": "balance", "type": "uint256" },
+      { "internalType": "contract IERC20", "name": "token", "type": "address" }
     ],
     "name": "stabilizeMultiple",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "token",
-    "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }],
-    "stateMutability": "view",
     "type": "function"
   }
 ]

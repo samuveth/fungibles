@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { type Inscription, type InscriptionNoBigint } from '@/helpers/types'
+import { type Inscription } from '@/helpers/types'
 const tokenStore = useTokenStore()
 
 defineProps<{
-  inscription: Inscription | InscriptionNoBigint
+  inscription: Inscription
 }>()
 </script>
 

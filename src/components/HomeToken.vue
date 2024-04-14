@@ -13,7 +13,6 @@ const { combineInscriptions, generateInscriptions } = useTransaction()
 
 const showCombineMultipleModal = ref(false)
 const generateModalOpen = ref(false)
-const modalStore = useModalStore()
 
 // const balance = computed(() => {
 //   if (!tokenStore.balanceUnits) return '0'
@@ -29,9 +28,9 @@ const actions = computed(() => {
 
   list.push({
     label: 'Combine',
-    tooltip: hasLessThanOneInscription.value ? 'Requires two' : null,
+    tooltip: combineTooltip.value,
     icon: IconArrowIn,
-    disabled: hasLessThanOneInscription.value,
+    disabled: hasLessThanOneInscription.value || tokenStore.tokenInfo?.key === 'pepi',
     action: () => {
       showCombineMultipleModal.value = true
     }
@@ -44,13 +43,23 @@ const actions = computed(() => {
     action: () => {
       generateModalOpen.value = true
     },
-    disabled: !dynamicInscription.value || dynamicInscription.value.seed.seed < 2n
+    disabled:
+      !dynamicInscription.value ||
+      dynamicInscription.value.seed.seed < 2n ||
+      tokenStore.tokenInfo?.key === 'pepi'
   })
 
   return list
 })
 
+const combineTooltip = computed(() => {
+  if (tokenStore.tokenInfo?.key === 'pepi') return 'Not available for Pepi'
+  if (hasLessThanOneInscription.value) return 'Requires two inscriptions'
+  return null
+})
+
 const generateTooltip = computed(() => {
+  if (tokenStore.tokenInfo?.key === 'pepi') return 'Not available for Pepi'
   if (!dynamicInscription.value) return 'Requires dynamic'
   if (dynamicInscription.value.seed.seed < 2n) return 'Not enough tokens'
   return null
@@ -167,10 +176,6 @@ watch(
           {{ action.label }}
         </button>
       </div>
-      <button class="btn btn-primary" @click="modalStore.savedInscriptionsOpen = true">
-        <i-hi-heart class="text-md" />
-        <span class="hidden sm:block"> Saved </span>
-      </button>
     </div>
 
     <div v-if="tokenStore.initializing" class="justify-center flex">
@@ -195,7 +200,9 @@ watch(
         <div>
           <h3 class="text-lg font-semibold mb-2">
             Stable {{ tokenStore.tokenInfo?.name }}
-            <div class="badge badge-lg font-normal">{{ stableInscriptions.length }}</div>
+            <div v-if="stableInscriptions.length > 0" class="badge badge-lg font-normal">
+              {{ stableInscriptions.length }}
+            </div>
           </h3>
         </div>
 
@@ -223,6 +230,5 @@ watch(
     <ModalTransactionSpending />
     <ModalTransactionPending />
     <ModalTransactionConfirm />
-    <ModalSavedInscriptions />
   </div>
 </template>

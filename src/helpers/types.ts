@@ -3,6 +3,7 @@ import { type Address } from 'viem'
 export type Seed = {
   isDynamic?: boolean
   seed: bigint
+  seed2?: bigint
   extra: bigint
   owner: Address
 }
@@ -18,12 +19,6 @@ export type SeedNoBigint = {
   seed: string
   extra: string
   owner: Address
-}
-
-export type InscriptionNoBigint = {
-  svg: string
-  seed: SeedNoBigint
-  meta: Record<string, any>
 }
 
 export type Token = {

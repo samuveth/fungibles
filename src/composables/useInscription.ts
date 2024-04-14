@@ -1,7 +1,5 @@
 import { readContract } from '@wagmi/core'
 import { type Address } from 'viem'
-
-import abi from '@/helpers/abi/fungi.json'
 import { config } from '@/helpers/wagmiConfig'
 import { type Seed, type Inscription } from '@/helpers/types'
 
@@ -10,7 +8,7 @@ export function useInscription() {
 
   async function getSeedSvg(seed: Seed) {
     return readContract(config, {
-      abi,
+      abi: tokenStore.abiComputed,
       address: tokenStore.tokenAddress,
       functionName: 'getSvg',
       args: [seed]
@@ -19,7 +17,7 @@ export function useInscription() {
 
   async function getSeedMeta(seed: Seed) {
     return readContract(config, {
-      abi,
+      abi: tokenStore.abiComputed,
       address: tokenStore.tokenAddress,
       functionName: 'getMeta',
       args: [seed]
@@ -27,12 +25,25 @@ export function useInscription() {
   }
 
   async function getInscription(seed: Seed) {
-    const [svg, meta] = await Promise.all([getSeedSvg(seed), getSeedMeta(seed)])
+    let svg = ''
+    let meta = '{}'
+
+    try {
+      svg = (await getSeedSvg(seed)) as string
+    } catch (error) {
+      console.error('Failed to fetch SVG:', error)
+    }
+
+    try {
+      meta = (await getSeedMeta(seed)) as string
+    } catch (error) {
+      console.error('Failed to fetch metadata:', error)
+    }
 
     return {
       svg,
       seed,
-      meta: JSON.parse(meta as string)
+      meta: JSON.parse(meta)
     }
   }
 
@@ -51,13 +62,13 @@ export function useInscription() {
   async function getInscriptionsByAddress(address: Address) {
     const [mushroomCount, dynamicMushroom] = (await Promise.all([
       readContract(config, {
-        abi,
+        abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
         functionName: 'mushroomCount',
         args: [address]
       }),
       readContract(config, {
-        abi,
+        abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
         functionName: 'sporesDegree',
         args: [address]
@@ -66,7 +77,7 @@ export function useInscription() {
 
     const seedPromises = Array.from({ length: Number(mushroomCount) }, async (_, index) => {
       return readContract(config, {
-        abi,
+        abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
         functionName: 'mushroomOfOwnerByIndex',
         args: [address, index]
@@ -77,6 +88,7 @@ export function useInscription() {
 
     seeds = seeds.map((seed) => ({
       seed: seed.seed,
+      seed2: seed.seed2,
       extra: seed.extra,
       owner: address
     }))
@@ -85,6 +97,7 @@ export function useInscription() {
       seeds.unshift({
         isDynamic: true,
         seed: dynamicMushroom.seed,
+        seed2: dynamicMushroom.seed2,
         extra: dynamicMushroom.extra,
         owner: address
       })

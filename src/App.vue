@@ -66,12 +66,6 @@ watch(isSuccess, (value) => {
   <RouterView />
 
   <!-- <footer class="fixed bottom-0 left-0 right-0 p-2 border-t bg-base-100 flex justify-between">
-    <button
-      class="btn btn-outline btn-sm border-0"
-      @click="modalStore.savedInscriptionsOpen = true"
-    >
-      <i-hi-heart-solid class="text-md" />
-    </button>
     <div class="flex gap-2">
       <RouterLink to="/about">
         <button class="btn btn-outline btn-sm border-0">

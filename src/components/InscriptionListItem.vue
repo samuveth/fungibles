@@ -1,19 +1,13 @@
 <script setup lang="ts">
 import { type Address, parseUnits } from 'viem'
-import { type InscriptionNoBigint, type Inscription } from '@/helpers/types'
-import { useStorage } from '@vueuse/core'
+import { type Inscription } from '@/helpers/types'
 
 const props = defineProps<{
   inscription: Inscription
   isOnlyInscription: boolean
 }>()
 
-const { addMessage } = useToastStore()
 const tokenStore = useTokenStore()
-const inscriptionsStorage = useStorage<Record<string, InscriptionNoBigint[]>>(
-  'fungibles-inscriptions',
-  {}
-)
 const { sendTokens, stabilizeInscription } = useTransaction()
 
 const sendModalOpen = ref(false)
@@ -33,37 +27,8 @@ async function send(address: Address) {
   )
 }
 
-function addInscriptionToStorage() {
-  const storageSeeds =
-    inscriptionsStorage.value[tokenStore.tokenAddress]?.map(
-      (inscription) => inscription.seed.seed
-    ) ?? []
-  if (storageSeeds.includes(props.inscription.seed.seed.toString())) {
-    addMessage('Inscription is already saved.')
-    return
-  }
-
-  const inscriptionToString = {
-    ...props.inscription,
-    seed: {
-      ...props.inscription.seed,
-      seed: props.inscription.seed.seed.toString(),
-      extra: props.inscription.seed.extra.toString()
-    }
-  }
-
-  inscriptionsStorage.value[tokenStore.tokenAddress] = [
-    ...(inscriptionsStorage.value[tokenStore.tokenAddress] ?? []),
-    ...[inscriptionToString]
-  ]
-  addMessage('Inscription has been saved.')
-}
-
 function handleAction(action: string) {
   switch (action) {
-    case 'save':
-      addInscriptionToStorage()
-      break
     case 'transfer':
       sendModalOpen.value = true
       break
