@@ -72,7 +72,7 @@ watch(isSuccess, (value) => {
       <aside class="gap-0">
         <div class="flex items-center gap-1">
           Donate to our community Safe
-          <div class="tooltip" data-tip="Todd, BLK and Sam are the signers of the Safe.">
+          <div class="tooltip" data-tip="Todd, BLK and Sam are the signers.">
             <i-hi-information-circle class="" />
           </div>
         </div>
