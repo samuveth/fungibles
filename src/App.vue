@@ -37,9 +37,9 @@ watch(isSuccess, (value) => {
 <template>
   <div class="min-h-dvh flex flex-col">
     <header>
-      <nav class="flex justify-between items-center p-2 border-b">
+      <nav class="flex justify-between items-center px-4 py-2 border-b">
         <RouterLink to="/">
-          <button class="text-xl pl-1.5">fungibles</button>
+          <button class="text-xl">fungibles</button>
         </RouterLink>
         <div class="flex items-center">
           <div>
@@ -51,7 +51,7 @@ watch(isSuccess, (value) => {
               <span> Connect </span>
             </button>
             <div v-else class="dropdown dropdown-bottom dropdown-end">
-              <div tabindex="0" role="button" class="btn m-1">
+              <div tabindex="0" role="button" class="btn">
                 {{ shortenAddress(address) }}
               </div>
               <ul
@@ -76,7 +76,7 @@ watch(isSuccess, (value) => {
             <i-hi-information-circle class="" />
           </div>
         </div>
-        base:0xA7e80a06d0cB623A8E9B18f8675D0730Bba70089
+        <span class="break-all"> base:0xA7e80a06d0cB623A8E9B18f8675D0730Bba70089 </span>
       </aside>
       <nav>
         <h6 class="footer-title">Navigation</h6>
