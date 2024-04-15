@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
-import { connectors } from '@/helpers/wagmiConfig'
 import { shortenAddress } from '@/helpers/utils'
 
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
-const { connect, isSuccess } = useConnect()
+const { connect, isSuccess, connectors } = useConnect()
 
 const modalOpen = ref(false)
 
@@ -16,16 +15,18 @@ function handleAccountClick() {
     modalOpen.value = true
   }
 }
+function handleConnect(connector: any) {
+  connect({ connector: connector })
+  if (connector.id === 'walletConnect') modalOpen.value = false
+}
 
-const connectorsList = computed(() => {
-  const names = ['Browser Wallet', 'Coinbase Wallet', 'Wallet Connect']
-  return connectors.map((connector, index) => {
-    return {
-      name: names[index],
-      connector: connector
-    }
-  })
-})
+function getConnectorName(id: string) {
+  if (id === 'injected') {
+    return 'Browser Wallet'
+  }
+
+  return null
+}
 
 watch(isSuccess, (value) => {
   if (value) {
@@ -104,11 +105,13 @@ watch(isSuccess, (value) => {
 
   <BaseModal title="Connect Wallet" :open="modalOpen" @close="modalOpen = false">
     <ul class="space-y-2 mt-4">
-      <li v-for="connector in connectorsList" :key="connector.name">
-        <button class="btn w-full" @click="connect({ connector: connector.connector })">
-          {{ connector.name }}
-        </button>
-      </li>
+      <template v-for="connector in connectors" :key="connector.name">
+        <li>
+          <button class="btn w-full" @click="handleConnect(connector)">
+            {{ getConnectorName(connector.id) || connector.name }}
+          </button>
+        </li>
+      </template>
     </ul>
   </BaseModal>
 </template>
