@@ -35,59 +35,70 @@ watch(isSuccess, (value) => {
 </script>
 
 <template>
-  <header>
-    <nav class="flex justify-between items-center p-2 border-b">
-      <RouterLink to="/">
-        <button class="text-xl pl-1.5">fungibles</button>
-      </RouterLink>
-      <div class="flex items-center gap-2">
-        <button
-          v-if="!address"
-          class="btn btn-primary text-base group min-w-[154px]"
-          @click="handleAccountClick"
-        >
-          <span> Connect </span>
-        </button>
-        <div v-else class="dropdown dropdown-bottom dropdown-end">
-          <div tabindex="0" role="button" class="btn m-1">
-            {{ shortenAddress(address) }}
+  <div class="min-h-dvh flex flex-col">
+    <header>
+      <nav class="flex justify-between items-center p-2 border-b">
+        <RouterLink to="/">
+          <button class="text-xl pl-1.5">fungibles</button>
+        </RouterLink>
+        <div class="flex items-center">
+          <div>
+            <button
+              v-if="!address"
+              class="btn btn-primary text-base group min-w-[154px]"
+              @click="handleAccountClick"
+            >
+              <span> Connect </span>
+            </button>
+            <div v-else class="dropdown dropdown-bottom dropdown-end">
+              <div tabindex="0" role="button" class="btn m-1">
+                {{ shortenAddress(address) }}
+              </div>
+              <ul
+                tabindex="0"
+                class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li><a @click="disconnect()">Disconnect</a></li>
+              </ul>
+            </div>
           </div>
-          <ul
-            tabindex="0"
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li><a @click="disconnect()">Disconnect</a></li>
-          </ul>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
 
-  <RouterView />
+    <RouterView class="flex-grow w-full" />
 
-  <!-- <footer class="fixed bottom-0 left-0 right-0 p-2 border-t bg-base-100 flex justify-between">
-    <div class="flex gap-2">
-      <RouterLink to="/about">
-        <button class="btn btn-outline btn-sm border-0">
-          <i-hi-information-circle class="text-[16px]" />
-        </button>
-      </RouterLink>
-      <a
-        href="https://github.com/samuveth/fungibles"
-        target="_blank"
-        class="btn btn-outline btn-sm border-0"
-      >
-        <i-icon-github class="text-lg" />
-      </a>
-      <a
-        href="https://twitter.com/samsamlantan"
-        target="_blank"
-        class="btn btn-outline btn-sm border-0"
-      >
-        <i-icon-x class="text-md" />
-      </a>
-    </div>
-  </footer> -->
+    <footer v-if="!$route.params.address" class="footer px-4 py-10 bg-base-200">
+      <aside class="gap-0">
+        <div class="flex items-center gap-1">
+          Donate to our community Safe
+          <div class="tooltip" data-tip="Todd, BLK and Sam are the signers of the Safe.">
+            <i-hi-information-circle class="" />
+          </div>
+        </div>
+        base:0xA7e80a06d0cB623A8E9B18f8675D0730Bba70089
+      </aside>
+      <nav>
+        <h6 class="footer-title">Navigation</h6>
+        <RouterLink to="/" class="link link-hover">Home</RouterLink>
+        <RouterLink to="/about" class="link link-hover">About</RouterLink>
+      </nav>
+      <nav>
+        <h6 class="footer-title">Links</h6>
+        <div class="grid grid-flow-col items-center gap-4">
+          <a href="https://github.com/samuveth/fungibles" target="_blank">
+            <i-icon-github class="text-[25px]" />
+          </a>
+          <a href="https://twitter.com/samsamlantan" target="_blank">
+            <i-icon-x class="text-[22px]" />
+          </a>
+          <a href="https://t.me/Fungi_ERC20i" target="_blank">
+            <i-icon-telegram class="text-[25px]" />
+          </a>
+        </div>
+      </nav>
+    </footer>
+  </div>
 
   <TheToasts />
 
