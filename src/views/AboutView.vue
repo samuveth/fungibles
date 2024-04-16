@@ -2,7 +2,8 @@
 
 <template>
   <main class="px-4 pt-4 pb-[73px] max-w-7xl mx-auto">
-    <div class="max-w-4xl mx-auto">
+    Coming soon...
+    <!-- <div class="max-w-4xl mx-auto">
       <article class="space-y-3">
         <p>
           The goal of fungibles is to enhance the experience of generating and managing ERC-20i
@@ -71,6 +72,6 @@
           🍄🍄🍄🍄🍄🍄🍄🍄
         </p>
       </article>
-    </div>
+    </div> -->
   </main>
 </template>
