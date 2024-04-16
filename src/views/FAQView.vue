@@ -57,7 +57,7 @@ const items = [
   {
     title: 'What is the difference between a dynamic and a stable inscription?',
     content:
-      'A dynamic inscription changes with token transactions, while a stable inscription remains unchanged, even when buying or selling tokens, unless the specific tokens linked to the artwork are moved.'
+      'A dynamic inscription changes with token transactions, while a stable inscription remains unchanged, even when buying or selling tokens, unless a partial amount of the tokens linked to the inscription are moved. Moving the whole amount of tokens linked to a dynamic or stable inscription will preserve the inscription.'
   },
   {
     title: 'What is Base?',
