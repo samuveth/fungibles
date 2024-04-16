@@ -94,7 +94,7 @@ watch(isSuccess, (value) => {
           <a href="https://twitter.com/samsamlantan" target="_blank">
             <i-icon-x class="text-[22px]" />
           </a>
-          <a href="https://t.me/Fungi_ERC20i" target="_blank">
+          <a href="https://t.me/ERC20i_community" target="_blank">
             <i-icon-telegram class="text-[25px]" />
           </a>
         </div>
