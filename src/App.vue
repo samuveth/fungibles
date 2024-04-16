@@ -73,12 +73,7 @@ watch(isSuccess, (value) => {
 
     <footer v-if="!$route.params.address" class="footer px-4 py-10 bg-base-200">
       <aside class="gap-0">
-        <div class="flex items-center gap-1">
-          Donate to our community Safe
-          <div class="tooltip" data-tip="Todd, BLK and Sam are the signers.">
-            <i-hi-information-circle class="" />
-          </div>
-        </div>
+        <div class="flex items-center gap-1">Support the Community</div>
         <span class="break-all"> base:0xA7e80a06d0cB623A8E9B18f8675D0730Bba70089 </span>
       </aside>
       <nav>
