@@ -1,11 +1,20 @@
 import { http, createConfig } from 'use-wagmi'
 import { base } from 'use-wagmi/chains'
-import { injected, walletConnect } from '@wagmi/connectors'
+import { injected, walletConnect, coinbaseWallet } from '@wagmi/connectors'
+import { Buffer } from 'buffer'
+
+if (!window.Buffer) {
+  window.Buffer = Buffer
+}
 
 export const connectors = [
   injected(),
   walletConnect({
     projectId: '2f8c6cb2e003455c9066dc57b74b577c'
+  }),
+  coinbaseWallet({
+    appName: 'fungibles.art',
+    chainId: base.id
   })
 ]
 

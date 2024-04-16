@@ -17,7 +17,8 @@ function handleAccountClick() {
 }
 function handleConnect(connector: any) {
   connect({ connector: connector })
-  if (connector.id === 'walletConnect') modalOpen.value = false
+  if (connector.id === 'walletConnect' || connector.id === 'coinbaseWalletSDK')
+    modalOpen.value = false
 }
 
 function getConnectorName(id: string) {
