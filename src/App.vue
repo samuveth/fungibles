@@ -83,7 +83,7 @@ watch(isSuccess, (value) => {
         <h6 class="footer-title">Navigation</h6>
         <RouterLink to="/" class="link link-hover">Discover</RouterLink>
         <RouterLink to="/about" class="link link-hover">About</RouterLink>
-        <RouterLink to="/help" class="link link-hover">FAQs</RouterLink>
+        <RouterLink to="/faq" class="link link-hover">FAQs</RouterLink>
       </nav>
       <nav>
         <h6 class="footer-title">Links</h6>
