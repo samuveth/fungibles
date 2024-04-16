@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { title } from 'process'
+import { TELEGRAM_URL } from '@/helpers/constants'
 
 const items = [
   {
@@ -81,6 +81,11 @@ const items = [
 
 <template>
   <div class="px-4 pb-[73px] max-w-5xl mx-auto mt-4">
+    <div class="mb-6">
+      Join us in the new
+      <a :href="TELEGRAM_URL" target="_blank" class="link">ERC20i Telegram Community</a> where we
+      discuss upcoming launches and more.
+    </div>
     <h2 class="text-xl font-semibold mb-2">FAQs</h2>
     <div class="space-y-2">
       <div v-for="item in items" :key="item.title" class="collapse bg-base-200">

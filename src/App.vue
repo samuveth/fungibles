@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
 import { shortenAddress } from '@/helpers/utils'
+import { TELEGRAM_URL } from '@/helpers/constants'
 
 const { address, isConnected } = useAccount()
 const { disconnect } = useDisconnect()
@@ -95,7 +96,7 @@ watch(isSuccess, (value) => {
           <a href="https://twitter.com/samsamlantan" target="_blank">
             <i-icon-x class="text-[22px]" />
           </a>
-          <a href="https://t.me/ERC20i_community" target="_blank">
+          <a :href="TELEGRAM_URL" target="_blank">
             <i-icon-telegram class="text-[25px]" />
           </a>
         </div>
