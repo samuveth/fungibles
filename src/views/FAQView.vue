@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { title } from 'process'
+
 const items = [
   {
     title: 'What is an ERC-20i?',
@@ -44,6 +46,11 @@ const items = [
     title: 'What is Fungi?',
     content:
       'Fungi is the pioneering ERC-20i token on the Base network. It integrates unique metadata inscriptions directly into token transactions, enabling the dynamic generation of on-chain art.'
+  },
+  {
+    title: 'Where can I buy Fungi tokens tokes?',
+    content:
+      'Fungi tokens can be purchased on Uniswap on Base. The contract address for Fungi can be found on the official website fungifungi.art.'
   },
   {
     title: 'Where can I view my inscriptions?',
