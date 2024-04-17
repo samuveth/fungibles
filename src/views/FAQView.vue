@@ -13,6 +13,11 @@ const items = [
       'Unlike NFTs (ERC-721), which rely on external storage for their unique identifiers, ERC-20i tokens are fully on-chain, hosting dynamic art without needing third-party storage. They offer potential for gamification and are more liquid due to their ERC-20 foundation.'
   },
   {
+    title: 'What is the difference between BTC Ordinals and ERC-20i tokens?',
+    content:
+      'BTC Ordinals and ERC-20i tokens both embed unique data on their respective blockchains but differ in functionality. BTC Ordinals inscribe static data permanently onto Bitcoin satoshis, creating immutable digital artifacts. In contrast, ERC-20i tokens on Ethereum can dynamically update their inscribed data, allowing for interactive and evolving art and metadata that can change with token transactions.'
+  },
+  {
     title: 'What is the difference between an ERC-20i and an ERC-404?',
     content:
       'ERC-20i embeds unique data within each token transaction, enhancing both fungibility and uniqueness. In contrast, ERC-404 bonds an NFT to an ERC-20 token to fractionalize ownership of the NFT.'
