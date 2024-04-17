@@ -169,7 +169,12 @@ watch(
         </a>
       </div>
     </div>
-    <div class="pt-4 sm:mt-0 mb-4 flex gap-2">
+    <div v-if="hasBrokenSeed2" role="alert" class="alert alert-warning mt-2">
+      <i-hi-exclamation-circle />
+      You have some invalid {{ tokenStore.tokenInfo?.name }}
+      in your wallet. Send your entire balance to another wallet to fix this.
+    </div>
+    <div class="pt-2 sm:mt-0 mb-4 flex gap-2">
       <div
         v-for="(action, i) in actions"
         :key="i"
@@ -194,11 +199,6 @@ watch(
       <div class="text-xl">Connect your wallet to manage your fungibles.</div>
     </div>
     <template v-else>
-      <div v-if="hasBrokenSeed2" role="alert" class="alert alert-warning mb-2">
-        <i-hi-exclamation-circle />
-        You have some invalid {{ tokenStore.tokenInfo?.name }}
-        in your wallet. Send your entire balance to another wallet to fix this.
-      </div>
       <div>
         <div>
           <h3 class="text-lg font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
