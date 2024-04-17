@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const tokenStore = useTokenStore()
-const { sendTokens, stabilizeInscription } = useTransaction()
+const { sendTokens, stabilizeInscription, destabilizeInscription } = useTransaction()
 
 const sendModalOpen = ref(false)
 const actionModalOpen = ref(false)
@@ -16,6 +16,11 @@ const actionModalOpen = ref(false)
 async function handleStabilize() {
   actionModalOpen.value = false
   await stabilizeInscription(props.inscription.seed.owner, props.inscription.seed.seed)
+}
+
+async function handleDestabilize() {
+  actionModalOpen.value = false
+  await destabilizeInscription(props.inscription.seed.owner, props.inscription.seed.seed)
 }
 
 async function send(address: Address) {
@@ -34,6 +39,9 @@ function handleAction(action: string) {
       break
     case 'stabilize':
       handleStabilize()
+      break
+    case 'destabilize':
+      handleDestabilize()
       break
   }
 }

@@ -30,6 +30,16 @@ const actions = computed(() => {
     })
   }
 
+  if (!props.inscription.seed.isDynamic && props.inscription.seed.seed > 1) {
+    list.push({
+      label: 'Destabilize Inscription',
+      tooltip: 'Destabilize this inscription to make it dynamic.',
+      action: () => {
+        handleAction('destabilize')
+      }
+    })
+  }
+
   return list
 })
 

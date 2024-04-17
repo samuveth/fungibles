@@ -91,6 +91,33 @@ export function useTransaction() {
     }
   }
 
+  async function destabilizeInscription(owner: Address, amount: bigint) {
+    await checkChainId()
+    try {
+      const parsedAmount = parseUnits(amount.toString(), tokenStore.tokenDecimals)
+
+      await checkAllowance(owner, parsedAmount * 2n)
+      modalStore.confirmOpen = true
+      const result = await writeContract(config, {
+        abi: stabilizeAbi,
+        address: STABILIZER_ADDRESS,
+        functionName: 'destabilize',
+        args: [parsedAmount, tokenStore.tokenAddress]
+      })
+      modalStore.confirmOpen = false
+      addTransaction(result)
+      await waitForTransactionReceipt(config, {
+        hash: result
+      })
+      tokenStore.reload()
+    } catch (e) {
+      console.error(e)
+    } finally {
+      modalStore.confirmOpen = false
+      removeTransaction()
+    }
+  }
+
   async function generateInscriptions(owner: Address, amounts: string[], sendAmount: bigint) {
     await checkChainId()
     try {
@@ -178,5 +205,11 @@ export function useTransaction() {
     }
   }
 
-  return { stabilizeInscription, generateInscriptions, combineInscriptions, sendTokens }
+  return {
+    stabilizeInscription,
+    destabilizeInscription,
+    generateInscriptions,
+    combineInscriptions,
+    sendTokens
+  }
 }
