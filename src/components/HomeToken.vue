@@ -121,6 +121,15 @@ const projectSocials = computed(() => {
   return list
 })
 
+const hasBrokenSeed2 = computed(() => {
+  if (
+    tokenStore.tokenInfo?.key === 'pepi' &&
+    tokenStore.inscriptions.some((i) => i.seed.seed2 === 0n)
+  )
+    return true
+  return false
+})
+
 // function copyAddress() {
 //   if (!tokenStore.tokenInfo) return
 //   navigator.clipboard.writeText(tokenStore.tokenInfo.address)
@@ -185,6 +194,11 @@ watch(
       <div class="text-xl">Connect your wallet to manage your fungibles.</div>
     </div>
     <template v-else>
+      <div v-if="hasBrokenSeed2" role="alert" class="alert alert-warning mb-2">
+        <i-hi-exclamation-circle />
+        You have some invalid {{ tokenStore.tokenInfo?.name }}
+        in your wallet. Send your entire balance to another wallet to fix this.
+      </div>
       <div>
         <div>
           <h3 class="text-lg font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>

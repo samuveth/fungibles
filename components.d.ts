@@ -14,6 +14,7 @@ declare module 'vue' {
     HomeToken: typeof import('./src/components/HomeToken.vue')['default']
     IHiArrowTopRightOnSquare16Solid: typeof import('~icons/heroicons/arrow-top-right-on-square16-solid')['default']
     IHiEllipsisVerticalSolid: typeof import('~icons/heroicons/ellipsis-vertical-solid')['default']
+    IHiExclamationCircle: typeof import('~icons/heroicons/exclamation-circle')['default']
     IHiHeart: typeof import('~icons/heroicons/heart')['default']
     IHiHeartSolid: (typeof import('~icons/heroicons/heart-solid'))['default']
     IHiInformationCircle: typeof import('~icons/heroicons/information-circle')['default']

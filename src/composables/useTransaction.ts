@@ -1,12 +1,21 @@
-import { readContract, writeContract, waitForTransactionReceipt } from '@wagmi/core'
+import { readContract, writeContract, waitForTransactionReceipt, switchChain } from '@wagmi/core'
 import { type Address, type Hash, parseUnits } from 'viem'
 import { STABILIZER_ADDRESS } from '@/helpers/constants'
+import { useAccount } from 'use-wagmi'
 import { config } from '@/helpers/wagmiConfig'
 import stabilizeAbi from '@/helpers/abi/stabilizer.json'
+import { base } from 'use-wagmi/chains'
 
 export function useTransaction() {
   const modalStore = useModalStore()
   const tokenStore = useTokenStore()
+  const { chainId } = useAccount()
+
+  async function checkChainId() {
+    if (chainId.value !== base.id) {
+      await switchChain(config, { chainId: base.id })
+    }
+  }
 
   function addTransaction(transaction: Hash) {
     modalStore.pendingOpen = true
@@ -56,6 +65,7 @@ export function useTransaction() {
   }
 
   async function stabilizeInscription(owner: Address, amount: bigint) {
+    await checkChainId()
     try {
       const parsedAmount = parseUnits(amount.toString(), tokenStore.tokenDecimals)
 
@@ -82,6 +92,7 @@ export function useTransaction() {
   }
 
   async function generateInscriptions(owner: Address, amounts: string[], sendAmount: bigint) {
+    await checkChainId()
     try {
       const parsedAmounts = amounts.map((amount) => parseUnits(amount, tokenStore.tokenDecimals))
       const parsedSendAmount = parseUnits(sendAmount.toString(), tokenStore.tokenDecimals)
@@ -111,6 +122,7 @@ export function useTransaction() {
   }
 
   async function combineInscriptions(owner: Address, amounts: bigint[]) {
+    await checkChainId()
     try {
       const parsedAmounts = amounts.map((amount) =>
         parseUnits(amount.toString(), tokenStore.tokenDecimals)
@@ -141,6 +153,7 @@ export function useTransaction() {
   }
 
   async function sendTokens(from: Address, to: Address, amount: string) {
+    await checkChainId()
     try {
       modalStore.confirmOpen = true
       const result = await writeContract(config, {
