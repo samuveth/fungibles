@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     BaseInscription: typeof import('./src/components/BaseInscription.vue')['default']
     BaseModal: typeof import('./src/components/BaseModal.vue')['default']
+    ButtonConnect: typeof import('./src/components/ButtonConnect.vue')['default']
     HomeBreadcrumbs: typeof import('./src/components/HomeBreadcrumbs.vue')['default']
     HomeDiscoverListItem: typeof import('./src/components/HomeDiscoverListItem.vue')['default']
     HomeToken: typeof import('./src/components/HomeToken.vue')['default']

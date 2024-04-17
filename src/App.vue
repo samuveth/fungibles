@@ -1,40 +1,5 @@
 <script setup lang="ts">
-import { useAccount, useDisconnect, useConnect } from 'use-wagmi'
-import { shortenAddress } from '@/helpers/utils'
 import { TELEGRAM_URL } from '@/helpers/constants'
-
-const { address, isConnected } = useAccount()
-const { disconnect } = useDisconnect()
-const { connect, isSuccess, connectors } = useConnect()
-
-const modalOpen = ref(false)
-
-function handleAccountClick() {
-  if (isConnected.value) {
-    disconnect()
-  } else {
-    modalOpen.value = true
-  }
-}
-function handleConnect(connector: any) {
-  connect({ connector: connector })
-  if (connector.id === 'walletConnect' || connector.id === 'coinbaseWalletSDK')
-    modalOpen.value = false
-}
-
-function getConnectorName(id: string) {
-  if (id === 'injected') {
-    return 'Browser Wallet'
-  }
-
-  return null
-}
-
-watch(isSuccess, (value) => {
-  if (value) {
-    modalOpen.value = false
-  }
-})
 </script>
 
 <template>
@@ -44,28 +9,7 @@ watch(isSuccess, (value) => {
         <RouterLink to="/">
           <button class="text-xl">fungibles</button>
         </RouterLink>
-        <div class="flex items-center">
-          <div>
-            <button
-              v-if="!address"
-              class="btn btn-primary text-base group min-w-[154px]"
-              @click="handleAccountClick"
-            >
-              <span> Connect </span>
-            </button>
-            <div v-else class="dropdown dropdown-bottom dropdown-end">
-              <div tabindex="0" role="button" class="btn">
-                {{ shortenAddress(address) }}
-              </div>
-              <ul
-                tabindex="0"
-                class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li><a @click="disconnect()">Disconnect</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <ButtonConnect />
       </nav>
     </header>
 
@@ -100,16 +44,4 @@ watch(isSuccess, (value) => {
   </div>
 
   <TheToasts />
-
-  <BaseModal title="Connect Wallet" :open="modalOpen" @close="modalOpen = false">
-    <ul class="space-y-2 mt-4">
-      <template v-for="connector in connectors" :key="connector.name">
-        <li>
-          <button class="btn w-full" @click="handleConnect(connector)">
-            {{ getConnectorName(connector.id) || connector.name }}
-          </button>
-        </li>
-      </template>
-    </ul>
-  </BaseModal>
 </template>
