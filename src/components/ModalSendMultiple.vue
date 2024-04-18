@@ -28,6 +28,7 @@ function handleSendMultiple() {
     selectedInscription.value.map((i) => i.seed.seed)
   )
   selectedInscription.value = []
+  addressInput.value = ''
 }
 </script>
 

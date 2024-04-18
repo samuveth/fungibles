@@ -11,6 +11,7 @@ const addressInput = ref('')
 
 function handleSend() {
   emit('send', addressInput.value)
+  addressInput.value = ''
 }
 </script>
 
