@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { useAccount } from 'use-wagmi'
+import { type Address } from 'viem'
 import IconX from '~icons/icon/x'
 import IconTelegram from '~icons/icon/telegram'
 import IconDexscreener from '~icons/icon/dexscreener'
 import IconGlobeAlt from '~icons/heroicons/globe-alt-solid'
 import IconArrowIn from '~icons/heroicons/arrows-pointing-in-solid'
 import IconArrowPath from '~icons/heroicons/arrow-path-rounded-square-solid'
+import IconAirplane from '~icons/heroicons/paper-airplane'
 
 const tokenStore = useTokenStore()
 const { address } = useAccount()
-const { combineInscriptions, generateInscriptions } = useTransaction()
+const { combineInscriptions, generateInscriptions, sendMultipleInscriptions } = useTransaction()
 
 const showCombineMultipleModal = ref(false)
 const generateModalOpen = ref(false)
+const showSendMultipleModal = ref(false)
 
 // const balance = computed(() => {
 //   if (!tokenStore.balanceUnits) return '0'
@@ -49,6 +52,15 @@ const actions = computed(() => {
       tokenStore.tokenInfo?.key === 'pepi'
   })
 
+  list.push({
+    label: 'Send',
+    tooltip: null,
+    icon: IconAirplane,
+    action: () => {
+      showSendMultipleModal.value = true
+    }
+  })
+
   return list
 })
 
@@ -83,6 +95,12 @@ async function handleGenerate(amounts: string[]) {
     amounts,
     dynamicInscription.value.seed.seed
   )
+}
+
+async function handleSendMultiple(to: Address, seeds: bigint[]) {
+  if (!to || !address.value) return
+  showSendMultipleModal.value = false
+  await sendMultipleInscriptions(to, address.value, seeds)
 }
 
 const projectSocials = computed(() => {
@@ -239,6 +257,12 @@ watch(
       :inscription="dynamicInscription"
       @close="generateModalOpen = false"
       @generate="handleGenerate"
+    />
+    <ModalSendMultiple
+      :open="showSendMultipleModal"
+      :inscriptions="tokenStore.inscriptions"
+      @close="showSendMultipleModal = false"
+      @sendMultiple="handleSendMultiple"
     />
 
     <ModalTransactionSpending />

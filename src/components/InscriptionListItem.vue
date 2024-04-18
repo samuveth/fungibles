@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const tokenStore = useTokenStore()
-const { sendTokens, stabilizeInscription, destabilizeInscription } = useTransaction()
+const { sendInscription, stabilizeInscription, destabilizeInscription } = useTransaction()
 
 const sendModalOpen = ref(false)
 const actionModalOpen = ref(false)
@@ -25,7 +25,7 @@ async function handleDestabilize() {
 
 async function send(address: Address) {
   sendModalOpen.value = false
-  await sendTokens(
+  await sendInscription(
     props.inscription.seed.owner,
     address,
     parseUnits(props.inscription.seed.seed.toString(), tokenStore.tokenDecimals).toString()

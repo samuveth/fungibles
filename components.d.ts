@@ -28,6 +28,7 @@ declare module 'vue' {
     ModalCombine: typeof import('./src/components/ModalCombine.vue')['default']
     ModalGenerate: typeof import('./src/components/ModalGenerate.vue')['default']
     ModalSend: typeof import('./src/components/ModalSend.vue')['default']
+    ModalSendMultiple: typeof import('./src/components/ModalSendMultiple.vue')['default']
     ModalTransactionConfirm: typeof import('./src/components/ModalTransactionConfirm.vue')['default']
     ModalTransactionPending: typeof import('./src/components/ModalTransactionPending.vue')['default']
     ModalTransactionSpending: typeof import('./src/components/ModalTransactionSpending.vue')['default']

@@ -179,7 +179,7 @@ export function useTransaction() {
     }
   }
 
-  async function sendTokens(from: Address, to: Address, amount: string) {
+  async function sendInscription(from: Address, to: Address, amount: string) {
     await checkChainId()
     try {
       modalStore.confirmOpen = true
@@ -205,11 +205,43 @@ export function useTransaction() {
     }
   }
 
+  async function sendMultipleInscriptions(to: Address, owner: Address, amounts: bigint[]) {
+    await checkChainId()
+    try {
+      const parsedAmounts = amounts.map((amount) =>
+        parseUnits(amount.toString(), tokenStore.tokenDecimals)
+      )
+
+      const amountsTotal = parsedAmounts.reduce((acc, amount) => acc + amount, 0n)
+
+      await checkAllowance(owner, amountsTotal)
+      modalStore.confirmOpen = true
+      const result = await writeContract(config, {
+        abi: stabilizeAbi,
+        address: STABILIZER_ADDRESS,
+        functionName: 'sendMultipleTo',
+        args: [to, parsedAmounts, tokenStore.tokenAddress]
+      })
+      modalStore.confirmOpen = false
+      addTransaction(result)
+      await waitForTransactionReceipt(config, {
+        hash: result
+      })
+      tokenStore.reload()
+    } catch (e) {
+      console.error(e)
+    } finally {
+      modalStore.confirmOpen = false
+      removeTransaction()
+    }
+  }
+
   return {
     stabilizeInscription,
     destabilizeInscription,
     generateInscriptions,
     combineInscriptions,
-    sendTokens
+    sendInscription,
+    sendMultipleInscriptions
   }
 }
