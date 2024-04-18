@@ -4,14 +4,7 @@ import { TELEGRAM_URL } from '@/helpers/constants'
 
 <template>
   <div class="min-h-dvh flex flex-col">
-    <header>
-      <nav class="flex justify-between items-center px-4 py-2 border-b">
-        <RouterLink to="/">
-          <button class="text-xl">fungibles</button>
-        </RouterLink>
-        <ButtonConnect />
-      </nav>
-    </header>
+    <TheTopnav />
 
     <RouterView class="flex-grow w-full" />
 
@@ -22,8 +15,7 @@ import { TELEGRAM_URL } from '@/helpers/constants'
       </aside>
       <nav>
         <h6 class="footer-title">Navigation</h6>
-        <RouterLink to="/" class="link link-hover">Discover</RouterLink>
-        <RouterLink to="/about" class="link link-hover">About</RouterLink>
+        <RouterLink to="/" class="link link-hover">Home</RouterLink>
         <RouterLink to="/faq" class="link link-hover">FAQs</RouterLink>
       </nav>
       <nav>

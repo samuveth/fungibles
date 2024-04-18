@@ -22,10 +22,7 @@ const modal = useWeb3Modal()
         <div tabindex="0" role="button" class="btn">
           {{ shortenAddress(address) }}
         </div>
-        <ul
-          tabindex="0"
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-        >
+        <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box">
           <li><a @click="disconnect()">Disconnect</a></li>
         </ul>
       </div>

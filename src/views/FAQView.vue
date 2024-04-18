@@ -35,7 +35,7 @@ const items = [
   {
     title: 'What are some examples of ERC-20i tokens?',
     content:
-      'Fungi is a notable example of an ERC-20i token. You can find more on the Discover page, where you can explore and interact with various ERC-20i tokens and their inscriptions.'
+      'Fungi is a notable example of an ERC-20i token. You can find more on the Home page, where you can explore and interact with various ERC-20i tokens and their inscriptions.'
   },
   {
     title: 'How do ERC-20i tokens promote creativity in blockchain?',
@@ -59,8 +59,7 @@ const items = [
   },
   {
     title: 'Where can I view my inscriptions?',
-    content:
-      'Visit the Discover page and select the token to view and interact with your inscriptions.'
+    content: 'Visit the Home page and select the token to view and interact with your inscriptions.'
   },
   {
     title: 'How do I generate new inscription?',
