@@ -27,7 +27,7 @@ const drawer1 = ref<HTMLInputElement | null>(null)
             <input ref="drawer1" id="drawer1" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
               <label for="drawer1" class="drawer-button btn">
-                <i-hi-bars-3-bottom-left-16-solid class="text-base" />
+                <i-hi-bars-3-bottom-left-16-solid />
               </label>
             </div>
             <div class="drawer-side">
