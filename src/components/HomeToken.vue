@@ -205,7 +205,9 @@ watch(
           @click="action.action()"
         >
           <component :is="action.icon" class="text-md" />
-          {{ action.label }}
+          <span class="hidden sm:block">
+            {{ action.label }}
+          </span>
         </button>
       </div>
     </div>
