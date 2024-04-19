@@ -14,7 +14,7 @@ const drawer1 = ref<HTMLInputElement | null>(null)
     <nav class="fixed w-full z-10">
       <div class="navbar bg-base-100 px-4 shadow-sm">
         <div class="navbar-start">
-          <RouterLink to="/">
+          <RouterLink to="/" class="flex items-center gap-1">
             <button class="text-xl">fungibles</button>
           </RouterLink>
         </div>
