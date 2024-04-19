@@ -19,7 +19,7 @@ const modal = useWeb3Modal()
         <span> Connect </span>
       </button>
       <div v-else class="dropdown dropdown-bottom dropdown-end">
-        <div tabindex="0" role="button" class="btn">
+        <div tabindex="0" role="button" class="btn btn-outline">
           {{ shortenAddress(address) }}
         </div>
         <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box">

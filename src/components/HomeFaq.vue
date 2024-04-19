@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { TELEGRAM_URL } from '@/helpers/constants'
-
 const items = [
   {
     title: 'What is an ERC-20i?',
@@ -84,13 +82,8 @@ const items = [
 </script>
 
 <template>
-  <div class="px-4 pb-[73px] max-w-5xl mx-auto mt-4">
-    <div class="mb-6">
-      Join us in the new
-      <a :href="TELEGRAM_URL" target="_blank" class="link">ERC20i Telegram Community</a> where we
-      discuss upcoming launches and more.
-    </div>
-    <h2 class="text-xl font-semibold mb-2">FAQs</h2>
+  <div class="pt-10">
+    <h2 class="text-lg font-semibold mb-2">FAQ</h2>
     <div class="space-y-2">
       <div v-for="item in items" :key="item.title" class="collapse bg-base-200">
         <input type="radio" name="my-accordion-1" />

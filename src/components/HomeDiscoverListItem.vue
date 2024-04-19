@@ -27,7 +27,7 @@ onMounted(async () => {
 <template>
   <RouterLink
     :to="token.address"
-    class="border rounded hover:scale-[102%] transition-all duration-300 overflow-hidden"
+    class="rounded hover:scale-[102%] transition-all duration-300 overflow-hidden"
   >
     <div
       class="h-[120px] bg-cover bg-center relative"
@@ -64,7 +64,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <div class="px-3 py-2 leading-5 text-sm">
+    <div class="px-4 py-3 leading-5 text-sm bg-base-200 h-full">
       {{ token.about }}
     </div>
   </RouterLink>
