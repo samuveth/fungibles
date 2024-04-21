@@ -2,9 +2,12 @@ import { readContract } from '@wagmi/core'
 import { type Address } from 'viem'
 import { config } from '@/helpers/wagmiConfig'
 import { type Seed, type Inscription } from '@/helpers/types'
+import { getFunctionNames } from '@/helpers/abi/mapping'
 
 export function useInscription() {
   const tokenStore = useTokenStore()
+
+  const functionNames = computed(() => getFunctionNames(tokenStore.tokenInfo?.key ?? ''))
 
   async function getSeedSvg(seed: Seed) {
     return readContract(config, {
@@ -64,13 +67,13 @@ export function useInscription() {
       readContract(config, {
         abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
-        functionName: 'mushroomCount',
+        functionName: functionNames.value?.['mushroomCount'],
         args: [address]
       }),
       readContract(config, {
         abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
-        functionName: 'sporesDegree',
+        functionName: functionNames.value?.['sporesDegree'],
         args: [address]
       })
     ])) as [number, Seed]
@@ -79,7 +82,7 @@ export function useInscription() {
       return readContract(config, {
         abi: tokenStore.abiComputed,
         address: tokenStore.tokenAddress,
-        functionName: 'mushroomOfOwnerByIndex',
+        functionName: functionNames.value?.['mushroomOfOwnerByIndex'],
         args: [address, index]
       })
     })

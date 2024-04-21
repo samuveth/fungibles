@@ -1,0 +1,506 @@
+[
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  { "inputs": [], "name": "ReentrancyGuardReentrantCall", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "spender", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "from", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "to", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "OnMedusaTransfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "holder", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "OnPolypsGrow",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "holder", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "OnPolypsShrink",
+    "type": "event"
+  },
+  { "anonymous": false, "inputs": [], "name": "RenounceOwnership", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "from", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "to", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "address", "name": "spender", "type": "address" }
+    ],
+    "name": "allowance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "approve",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "balanceOf",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "burnCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "subtractedValue", "type": "uint256" }
+    ],
+    "name": "decreaseAllowance",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "index", "type": "uint256" }],
+    "name": "getHolderByIndex",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "startIndex", "type": "uint256" },
+      { "internalType": "uint256", "name": "count", "type": "uint256" }
+    ],
+    "name": "getHoldersList",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "getMedusa",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "lvl", "type": "uint256" },
+          { "internalType": "string", "name": "background", "type": "string" },
+          { "internalType": "string", "name": "background2", "type": "string" },
+          { "internalType": "bool", "name": "hasGround", "type": "bool" },
+          { "internalType": "uint256", "name": "ground", "type": "uint256" },
+          { "internalType": "string", "name": "groundColor", "type": "string" },
+          { "internalType": "bool", "name": "hasBubble", "type": "bool" },
+          { "internalType": "uint256", "name": "bubble", "type": "uint256" },
+          { "internalType": "string", "name": "bubbleColor", "type": "string" },
+          { "internalType": "bool", "name": "hasWeed", "type": "bool" },
+          { "internalType": "uint256", "name": "weed", "type": "uint256" },
+          { "internalType": "string", "name": "weedColor", "type": "string" },
+          { "internalType": "uint256", "name": "mirrorTime", "type": "uint256" },
+          { "internalType": "uint256", "name": "bobTime", "type": "uint256" },
+          { "internalType": "uint256", "name": "tentacle", "type": "uint256" },
+          { "internalType": "string", "name": "tentacleColor", "type": "string" },
+          { "internalType": "uint256", "name": "bell", "type": "uint256" },
+          { "internalType": "string", "name": "bellColor", "type": "string" }
+        ],
+        "internalType": "struct MedusaData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "getMeta",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "getSvg",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "holdersCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "addedValue", "type": "uint256" }
+    ],
+    "name": "increaseAllowance",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "uint256", "name": "seed", "type": "uint256" }
+    ],
+    "name": "isOwnerOf",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "poolAddress", "type": "address" }],
+    "name": "launch",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxBuy",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "name": "medusaCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "medusaOfOwnerByIndex",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "medusasTotalCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ownerRenounce",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "name": "polypsDegree",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "polypsTotalCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pool",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "lvl", "type": "uint256" },
+          { "internalType": "uint256", "name": "file", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint8", "name": "x", "type": "uint8" },
+              { "internalType": "uint8", "name": "y", "type": "uint8" },
+              { "internalType": "uint8", "name": "width", "type": "uint8" },
+              { "internalType": "uint8", "name": "height", "type": "uint8" }
+            ],
+            "internalType": "struct Rect[]",
+            "name": "rects",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct FileData[]",
+        "name": "data",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setBells",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "lvl", "type": "uint256" },
+          { "internalType": "uint256", "name": "file", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint8", "name": "x", "type": "uint8" },
+              { "internalType": "uint8", "name": "y", "type": "uint8" },
+              { "internalType": "uint8", "name": "width", "type": "uint8" },
+              { "internalType": "uint8", "name": "height", "type": "uint8" }
+            ],
+            "internalType": "struct Rect[]",
+            "name": "rects",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct FileData[]",
+        "name": "data",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setBubbles",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "lvl", "type": "uint256" },
+          { "internalType": "uint256", "name": "file", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint8", "name": "x", "type": "uint8" },
+              { "internalType": "uint8", "name": "y", "type": "uint8" },
+              { "internalType": "uint8", "name": "width", "type": "uint8" },
+              { "internalType": "uint8", "name": "height", "type": "uint8" }
+            ],
+            "internalType": "struct Rect[]",
+            "name": "rects",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct FileData[]",
+        "name": "data",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setTentacles",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "lvl", "type": "uint256" },
+          { "internalType": "uint256", "name": "file", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint8", "name": "x", "type": "uint8" },
+              { "internalType": "uint8", "name": "y", "type": "uint8" },
+              { "internalType": "uint8", "name": "width", "type": "uint8" },
+              { "internalType": "uint8", "name": "height", "type": "uint8" }
+            ],
+            "internalType": "struct Rect[]",
+            "name": "rects",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct FileData[]",
+        "name": "data",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setWeeds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transfer",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "from", "type": "address" },
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transferFrom",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
