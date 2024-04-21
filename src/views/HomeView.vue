@@ -6,13 +6,13 @@ const tokenStore = useTokenStore()
 </script>
 
 <template>
-  <div class="px-4 max-w-6xl mx-auto py-4">
+  <div class="px-4 max-w-6xl mx-auto mb-28">
     <div v-if="tokenStore.tokenAddress && tokenStore.tokenInfo">
       <HomeBreadcrumbs class="pb-2" />
       <HomeToken />
     </div>
     <template v-else>
-      <div class="bg-base-200 rounded py-20 text-center px-4">
+      <div class="bg-base-200 rounded py-20 mt-10 text-center px-4">
         <a :href="TELEGRAM_URL" target="_blank" class="btn btn-outline btn-sm rounded-full">
           Join the Telegram<i-hi-arrow-top-right-on-square-20-solid class="text-xs" />
         </a>
