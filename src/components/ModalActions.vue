@@ -30,14 +30,16 @@ const actions = computed(() => {
     })
   }
 
-  if (!props.inscription.seed.isDynamic && props.inscription.seed.seed > 1) {
-    list.push({
-      label: 'Destabilize Inscription',
-      tooltip: 'Destabilize this inscription to make it dynamic.',
-      action: () => {
-        handleAction('destabilize')
-      }
-    })
+  if (!props.inscription.seed.isDynamic) {
+    if (props.inscription.seed.seed > 1) {
+      list.push({
+        label: 'Destabilize Inscription',
+        tooltip: 'Destabilize this inscription to make it dynamic.',
+        action: () => {
+          handleAction('destabilize')
+        }
+      })
+    }
   }
 
   return list
@@ -66,5 +68,17 @@ function handleAction(action: string) {
         </button>
       </div>
     </div>
+    <a href="https://inscriptions.market/sell" target="_blank" class="group">
+      <div
+        class="border py-3 rounded-xl mt-4 group-hover:scale-[102%] transition-all duration-200 flex items-center justify-center border-blue-400 text-blue-400 font-semibold"
+      >
+        <img
+          src="https://inscriptions.market/images/logo.png"
+          class="w-6 h-6 mr-2"
+          alt="Marketplace"
+        />
+        Sell on Marketplace
+      </div>
+    </a>
   </BaseModal>
 </template>
