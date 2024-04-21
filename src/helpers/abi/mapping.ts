@@ -6,4 +6,9 @@ export function getFunctionNames(key: string) {
       sporesDegree: 'polypsDegree'
     }
   }
+  return {
+    mushroomCount: 'mushroomCount',
+    mushroomOfOwnerByIndex: 'mushroomOfOwnerByIndex',
+    sporesDegree: 'sporesDegree'
+  }
 }
