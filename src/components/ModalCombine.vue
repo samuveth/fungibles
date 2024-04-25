@@ -35,7 +35,7 @@ function handleCombine() {
 
 <template>
   <BaseModal title="Select Inscriptions" :open="open" @close="$emit('close')">
-    <div class="grid grid-cols-1 gap-2 max-h-[400px] overflow-auto mb-2">
+    <div class="grid grid-cols-2 gap-2 max-h-[400px] overflow-auto mb-2">
       <button
         v-for="(inscription, i) in inscriptions"
         :key="i"
@@ -43,10 +43,10 @@ function handleCombine() {
         class="border m-[1px]"
         :class="{ 'border-2 !m-0 border-primary': selectedInscription.includes(inscription) }"
       >
-        <div class="flex text-left">
-          <div v-html="inscription.svg" class="w-20 shrink-0" />
+        <div>
+          <div v-html="inscription.svg" class="w-full shrink-0" />
           <div class="py-2 px-3 w-full">
-            {{ inscription.seed.isDynamic ? 'Dynamic' : 'Stable' }}{{ tokenStore.tokenInfo?.name }}
+            {{ tokenStore.tokenInfo?.name }}
             {{ inscription.seed.seed }}
           </div>
         </div>
