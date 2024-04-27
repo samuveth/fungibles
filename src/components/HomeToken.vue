@@ -170,7 +170,7 @@ watch(
           loading="lazy"
           :src="tokenStore.tokenInfo?.logo"
           alt="logo"
-          class="w-[24px] h-[24px] rounded-full"
+          class="w-[28px] h-[28px] rounded-full"
         />
         <span class="font-semibold"> {{ tokenStore.tokenInfo?.name }} </span>
         / {{ tokenStore.tokenInfo?.symbol }}
