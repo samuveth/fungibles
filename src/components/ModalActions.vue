@@ -73,6 +73,7 @@ function handleAction(action: string) {
         class="border py-3 rounded-xl mt-4 group-hover:scale-[102%] transition-all duration-200 flex items-center justify-center border-blue-400 text-blue-400 font-semibold"
       >
         <img
+          loading="lazy"
           src="https://inscriptions.market/images/logo.png"
           class="w-6 h-6 mr-2"
           alt="Marketplace"

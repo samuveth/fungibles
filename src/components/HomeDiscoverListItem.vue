@@ -39,7 +39,12 @@ onMounted(async () => {
     >
       <div class="w-full h-full bg-black bg-opacity-60 px-3 py-3 text-white">
         <div class="flex items-start gap-2">
-          <img :src="token.logo" class="w-[24px] h-[24px] rounded-full mt-0.5" />
+          <img
+            loading="lazy"
+            :src="token.logo"
+            alt="logo"
+            class="w-[24px] h-[24px] rounded-full mt-0.5"
+          />
           <h3 class="text-xl">
             <span class="font-semibold"> {{ token.name }} </span>
             <span> / {{ token.symbol }} </span>

@@ -36,6 +36,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <img ref="targetImg" alt="erc20i-image" />
+    <img loading="lazy" ref="targetImg" alt="inscription-art" />
   </div>
 </template>

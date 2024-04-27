@@ -166,7 +166,12 @@ watch(
   <div>
     <div class="sm:flex justify-between px-4 py-5 bg-base-200 rounded">
       <h2 class="text-xl flex items-center gap-2 pl-0.5">
-        <img :src="tokenStore.tokenInfo?.logo" class="w-[24px] h-[24px] rounded-full" />
+        <img
+          loading="lazy"
+          :src="tokenStore.tokenInfo?.logo"
+          alt="logo"
+          class="w-[24px] h-[24px] rounded-full"
+        />
         <span class="font-semibold"> {{ tokenStore.tokenInfo?.name }} </span>
         / {{ tokenStore.tokenInfo?.symbol }}
         <!-- <button class="text-sm pl-2 flex items-center gap-1" @click="copyAddress">
