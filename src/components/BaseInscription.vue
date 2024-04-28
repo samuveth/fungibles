@@ -6,7 +6,7 @@ defineProps<{
   inscription: Inscription
 }>()
 
-const notSupportedPng = ['jelli']
+const notSupportedPng = ['jelli', 'froggi']
 </script>
 
 <template>

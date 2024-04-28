@@ -6,6 +6,13 @@ export function getFunctionNames(key: string) {
       sporesDegree: 'polypsDegree'
     }
   }
+  if (key === 'froggi') {
+    return {
+      mushroomCount: 'inscriptionCount',
+      mushroomOfOwnerByIndex: 'inscriptionOfOwnerByIndex',
+      sporesDegree: 'dynamicInscription'
+    }
+  }
   return {
     mushroomCount: 'mushroomCount',
     mushroomOfOwnerByIndex: 'mushroomOfOwnerByIndex',

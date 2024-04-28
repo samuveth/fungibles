@@ -1,0 +1,481 @@
+[
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  { "inputs": [], "name": "ReentrancyGuardReentrantCall", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "spender", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "holder", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "OnDynamicInscriptionAdd",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "holder", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "OnDynamicInscriptionRemove",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "from", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "to", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "OnInscriptionTransfer",
+    "type": "event"
+  },
+  { "anonymous": false, "inputs": [], "name": "RenounceOwnership", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "from", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "to", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "address", "name": "spender", "type": "address" }
+    ],
+    "name": "allowance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "approve",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "balanceOf",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "burnCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "subtractedValue", "type": "uint256" }
+    ],
+    "name": "decreaseAllowance",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "name": "dynamicInscription",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dynamicInscriptionTotalCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "getFrog",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "lvl", "type": "uint256" },
+          { "internalType": "uint256", "name": "egg", "type": "uint256" },
+          { "internalType": "uint256", "name": "eggPalette", "type": "uint256" },
+          { "internalType": "uint256", "name": "eggAnimation", "type": "uint256" },
+          { "internalType": "uint256", "name": "bg", "type": "uint256" },
+          { "internalType": "uint256", "name": "bgPalette", "type": "uint256" },
+          { "internalType": "uint256", "name": "colorCycle", "type": "uint256" },
+          { "internalType": "uint256", "name": "body", "type": "uint256" },
+          { "internalType": "uint256", "name": "bodyPalette", "type": "uint256" },
+          { "internalType": "bool", "name": "animateBody", "type": "bool" },
+          { "internalType": "uint256", "name": "expression", "type": "uint256" },
+          { "internalType": "uint256", "name": "eyes", "type": "uint256" },
+          { "internalType": "uint256", "name": "eyesPalette", "type": "uint256" },
+          { "internalType": "bool", "name": "hatBool", "type": "bool" },
+          { "internalType": "uint256", "name": "hat", "type": "uint256" },
+          { "internalType": "uint256", "name": "hatPalette", "type": "uint256" },
+          { "internalType": "bool", "name": "eyewearBool", "type": "bool" },
+          { "internalType": "uint256", "name": "eyewear", "type": "uint256" },
+          { "internalType": "uint256", "name": "eyewearPalette", "type": "uint256" },
+          { "internalType": "bool", "name": "clothesBool", "type": "bool" },
+          { "internalType": "uint256", "name": "clothes", "type": "uint256" },
+          { "internalType": "uint256", "name": "clothesPalette", "type": "uint256" },
+          { "internalType": "bool", "name": "animateBg", "type": "bool" },
+          { "internalType": "uint256", "name": "animatedBg", "type": "uint256" },
+          { "internalType": "uint256", "name": "animatedBgPalette", "type": "uint256" }
+        ],
+        "internalType": "struct FrogData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "index", "type": "uint256" }],
+    "name": "getHolderByIndex",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "getHolderIndex",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "startIndex", "type": "uint256" },
+      { "internalType": "uint256", "name": "count", "type": "uint256" }
+    ],
+    "name": "getHoldersList",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "getMeta",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "seed_data",
+        "type": "tuple"
+      }
+    ],
+    "name": "getSvg",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "holdersCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "spender", "type": "address" },
+      { "internalType": "uint256", "name": "addedValue", "type": "uint256" }
+    ],
+    "name": "increaseAllowance",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "name": "inscriptionCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "inscriptionOfOwnerByIndex",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "seed", "type": "uint256" },
+          { "internalType": "uint256", "name": "extra", "type": "uint256" }
+        ],
+        "internalType": "struct SeedData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "inscriptionsTotalCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "owner", "type": "address" },
+      { "internalType": "uint256", "name": "seed", "type": "uint256" }
+    ],
+    "name": "isOwnerOf",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "poolAddress", "type": "address" }],
+    "name": "launch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxBuy",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ownerRenounce",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pool",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "keyFrame", "type": "string" },
+          { "internalType": "string", "name": "keyFrameName", "type": "string" },
+          { "internalType": "string", "name": "animation", "type": "string" },
+          { "internalType": "string[]", "name": "targets", "type": "string[]" }
+        ],
+        "internalType": "struct Animation",
+        "name": "data",
+        "type": "tuple"
+      },
+      { "internalType": "uint256", "name": "id", "type": "uint256" }
+    ],
+    "name": "setAnimation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string[]", "name": "data", "type": "string[]" },
+      { "internalType": "uint256", "name": "offset", "type": "uint256" }
+    ],
+    "name": "setColors",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [{ "internalType": "uint16[]", "name": "list", "type": "uint16[]" }],
+        "internalType": "struct FilePaletteData[]",
+        "name": "data",
+        "type": "tuple[]"
+      },
+      { "internalType": "uint256", "name": "offset", "type": "uint256" }
+    ],
+    "name": "setPalettes",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "fileId", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint16", "name": "color", "type": "uint16" },
+              { "internalType": "uint16", "name": "paletteIndex", "type": "uint16" },
+              { "internalType": "bool", "name": "usePalette", "type": "bool" },
+              { "internalType": "string", "name": "d", "type": "string" }
+            ],
+            "internalType": "struct Path[]",
+            "name": "Data",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct FilePathData[]",
+        "name": "data",
+        "type": "tuple[]"
+      },
+      { "internalType": "uint256", "name": "offset", "type": "uint256" }
+    ],
+    "name": "setPaths",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transfer",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "from", "type": "address" },
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transferFrom",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
