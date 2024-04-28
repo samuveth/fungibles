@@ -10,6 +10,7 @@ export type Seed = {
 
 export type Inscription = {
   svg: string
+  animatedSvg?: string
   seed: Seed
   meta: Record<string, any>
 }

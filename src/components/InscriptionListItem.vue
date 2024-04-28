@@ -12,14 +12,17 @@ const { sendInscription, stabilizeInscription, destabilizeInscription } = useTra
 
 const sendModalOpen = ref(false)
 const actionModalOpen = ref(false)
+const modalOpen = ref(false)
 
 async function handleStabilize() {
   actionModalOpen.value = false
+  modalOpen.value = false
   await stabilizeInscription(props.inscription.seed.owner, props.inscription.seed.seed)
 }
 
 async function handleDestabilize() {
   actionModalOpen.value = false
+  modalOpen.value = false
   await destabilizeInscription(props.inscription.seed.owner, props.inscription.seed.seed)
 }
 
@@ -45,18 +48,46 @@ function handleAction(action: string) {
       break
   }
 }
+
+function handleOpenModal() {
+  if (tokenStore.tokenInfo?.key === 'truffi') {
+    modalOpen.value = true
+    return
+  }
+  actionModalOpen.value = true
+}
 </script>
 
 <template>
-  <button @click="actionModalOpen = true">
-    <BaseInscription :inscription="inscription" />
+  <button @click="handleOpenModal">
+    <div
+      class="hover:scale-[102%] transition-all duration-300 w-full rounded-t overflow-hidden border rounded-b"
+    >
+      <BaseInscription :inscription="inscription" />
+      <div class="px-3 py-2">
+        <div class="sm:flex justify-between items-center">
+          <div class="font-semibold">
+            {{ inscription.seed.seed }}
+            {{ tokenStore.tokenInfo?.symbol }}
+          </div>
+        </div>
+      </div>
+    </div>
   </button>
   <ModalSend :open="sendModalOpen" @send="send" @close="sendModalOpen = false" />
 
   <ModalActions
+    v-if="actionModalOpen"
     :open="actionModalOpen"
     :inscription="inscription"
     @action="handleAction"
     @close="actionModalOpen = false"
+  />
+  <ModalInscription
+    v-if="modalOpen"
+    :inscription="inscription"
+    :open="modalOpen"
+    @action="handleAction"
+    @close="modalOpen = false"
   />
 </template>
