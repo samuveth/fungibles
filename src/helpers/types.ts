@@ -4,12 +4,14 @@ export type Seed = {
   isDynamic?: boolean
   seed: bigint
   seed2?: bigint
+  creator?: Address
   extra: bigint
   owner: Address
 }
 
 export type Inscription = {
   svg: string
+  animatedSvg?: string
   seed: Seed
   meta: Record<string, any>
 }

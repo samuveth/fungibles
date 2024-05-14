@@ -18,6 +18,15 @@ export function useInscription() {
     })
   }
 
+  async function getSeedAnimatedSvg(seed: Seed) {
+    return readContract(config, {
+      abi: tokenStore.abiComputed,
+      address: tokenStore.tokenAddress,
+      functionName: 'getAnimatedSvg',
+      args: [seed]
+    })
+  }
+
   async function getSeedMeta(seed: Seed) {
     return readContract(config, {
       abi: tokenStore.abiComputed,
@@ -29,10 +38,12 @@ export function useInscription() {
 
   async function getInscription(seed: Seed) {
     let svg = ''
+    let animatedSvg = ''
     let meta = '{}'
 
     try {
       svg = (await getSeedSvg(seed)) as string
+      animatedSvg = (await getSeedAnimatedSvg(seed)) as string
     } catch (error) {
       console.error('Failed to fetch SVG:', error)
     }
@@ -45,6 +56,7 @@ export function useInscription() {
 
     return {
       svg,
+      animatedSvg,
       seed,
       meta: JSON.parse(meta)
     }
@@ -93,6 +105,7 @@ export function useInscription() {
       seed: seed.seed,
       seed2: seed.seed2,
       extra: seed.extra,
+      creator: seed.creator,
       owner: address
     }))
 
@@ -102,6 +115,7 @@ export function useInscription() {
         seed: dynamicMushroom.seed,
         seed2: dynamicMushroom.seed2,
         extra: dynamicMushroom.extra,
+        creator: '0x0000000000000000000000000000000000000000',
         owner: address
       })
     }
