@@ -85,7 +85,7 @@ function handleAction(action: string) {
           </div>
         </a>
       </div>
-      <BaseInscription :inscription="inscription" animated class="lg:col-span-2" />
+      <BaseInscription :inscription="inscription" class="lg:col-span-2" />
       <div>
         <ModalInscriptionTraitsTruffi :inscription="inscription" />
       </div>

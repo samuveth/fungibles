@@ -4,6 +4,7 @@ export type Seed = {
   isDynamic?: boolean
   seed: bigint
   seed2?: bigint
+  creator?: Address
   extra: bigint
   owner: Address
 }

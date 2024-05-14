@@ -56,14 +56,18 @@ function handleOpenModal() {
   }
   actionModalOpen.value = true
 }
+
+const hover = ref(false)
 </script>
 
 <template>
   <button @click="handleOpenModal">
     <div
-      class="hover:scale-[102%] transition-all duration-300 w-full rounded-t overflow-hidden border rounded-b"
+      @mouseenter="hover = true"
+      @mouseleave="hover = false"
+      class="transition-all duration-300 w-full rounded-t overflow-hidden border rounded-b"
     >
-      <BaseInscription :inscription="inscription" />
+      <BaseInscription :animated="hover" :inscription="inscription" />
       <div class="px-3 py-2">
         <div class="sm:flex justify-between items-center">
           <div class="font-semibold">

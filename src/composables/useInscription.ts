@@ -105,6 +105,7 @@ export function useInscription() {
       seed: seed.seed,
       seed2: seed.seed2,
       extra: seed.extra,
+      creator: seed.creator,
       owner: address
     }))
 
@@ -114,6 +115,7 @@ export function useInscription() {
         seed: dynamicMushroom.seed,
         seed2: dynamicMushroom.seed2,
         extra: dynamicMushroom.extra,
+        creator: '0x0000000000000000000000000000000000000000',
         owner: address
       })
     }
