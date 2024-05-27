@@ -16,6 +16,7 @@ const { combineInscriptions, generateInscriptions, sendMultipleInscriptions } = 
 const showCombineMultipleModal = ref(false)
 const generateModalOpen = ref(false)
 const showSendMultipleModal = ref(false)
+const addressInput = ref('')
 
 // const balance = computed(() => {
 //   if (!tokenStore.balanceUnits) return '0'
@@ -55,6 +56,7 @@ const actions = computed(() => {
   list.push({
     label: 'Send',
     tooltip: null,
+    disabled: tokenStore.inscriptions.length < 2,
     icon: IconAirplane,
     action: () => {
       showSendMultipleModal.value = true
@@ -154,9 +156,9 @@ const hasBrokenSeed2 = computed(() => {
 // }
 
 watch(
-  address,
+  [address, addressInput],
   async () => {
-    if (address.value) tokenStore.init(address.value)
+    tokenStore.init(address.value! || addressInput.value)
   },
   { immediate: true }
 )
@@ -197,7 +199,7 @@ watch(
       You have some invalid {{ tokenStore.tokenInfo?.name }}
       in your wallet. Send your entire balance to another wallet to fix this.
     </div>
-    <div class="pt-2 sm:mt-0 mb-4 flex gap-2">
+    <div v-if="address" class="pt-2 sm:mt-0 mb-4 flex gap-2">
       <div
         v-for="(action, i) in actions"
         :key="i"
@@ -217,13 +219,23 @@ watch(
       </div>
     </div>
 
-    <div v-if="tokenStore.initializing" class="justify-center flex">
+    <div v-if="tokenStore.initializing" class="justify-center flex mt-4">
       <span class="loading loading-spinner loading-sm"></span>
     </div>
     <div v-else-if="!address">
-      <div class="text-xl">Connect your wallet to manage your fungibles.</div>
+      <div class="text-xl my-4">
+        Connect your wallet to manage your inscriptions, or past your wallet address below.
+        <div class="mt-2">
+          <input
+            v-model="addressInput"
+            type="string"
+            placeholder="Enter wallet address"
+            class="input input-bordered w-full max-w-[500px]"
+          />
+        </div>
+      </div>
     </div>
-    <template v-else>
+    <template v-if="!tokenStore.initializing && (address || addressInput)">
       <div>
         <div>
           <h3 class="text-lg font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>

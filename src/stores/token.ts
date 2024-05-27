@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { readContract } from '@wagmi/core'
-import { type Address } from 'viem'
+import { isAddress, type Address } from 'viem'
 import { config } from '@/helpers/wagmiConfig'
 import { useAccount } from 'use-wagmi'
 import { type Inscription } from '@/helpers/types'
@@ -27,6 +27,7 @@ export const useTokenStore = defineStore('token', () => {
   })
 
   async function init(address: Address) {
+    if (!isAddress(address)) return
     initializing.value = true
     balanceUnits.value = (await readContract(config, {
       abi: abiComputed.value,
