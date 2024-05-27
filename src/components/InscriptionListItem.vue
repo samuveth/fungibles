@@ -62,11 +62,7 @@ const hover = ref(false)
 
 <template>
   <button @click="handleOpenModal">
-    <div
-      @mouseenter="hover = true"
-      @mouseleave="hover = false"
-      class="transition-all duration-300 w-full rounded-t overflow-hidden border rounded-b"
-    >
+    <div class="transition-all duration-300 w-full rounded-t overflow-hidden border rounded-b">
       <BaseInscription :animated="hover" :inscription="inscription" />
       <div class="px-3 py-2">
         <div class="sm:flex justify-between items-center">

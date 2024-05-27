@@ -43,7 +43,8 @@ export function useInscription() {
 
     try {
       svg = (await getSeedSvg(seed)) as string
-      animatedSvg = (await getSeedAnimatedSvg(seed)) as string
+      if (tokenStore.tokenInfo?.key === 'truffi')
+        animatedSvg = (await getSeedAnimatedSvg(seed)) as string
     } catch (error) {
       console.error('Failed to fetch SVG:', error)
     }
