@@ -42,8 +42,8 @@ export function useTransaction() {
       await waitForTransactionReceipt(config, {
         hash: result
       })
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
       throw e
     } finally {
       modalStore.spendingOpen = false
@@ -83,8 +83,8 @@ export function useTransaction() {
         hash: result
       })
       tokenStore.reload()
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     } finally {
       modalStore.confirmOpen = false
       removeTransaction()
@@ -110,8 +110,8 @@ export function useTransaction() {
         hash: result
       })
       tokenStore.reload()
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     } finally {
       modalStore.confirmOpen = false
       removeTransaction()
@@ -140,8 +140,8 @@ export function useTransaction() {
         hash: result
       })
       tokenStore.reload()
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     } finally {
       modalStore.confirmOpen = false
       removeTransaction()
@@ -149,6 +149,7 @@ export function useTransaction() {
   }
 
   async function combineInscriptions(owner: Address, amounts: bigint[]) {
+    console.log('🚀 ~ combineInscriptions ~ STABILIZER_ADDRESS:', STABILIZER_ADDRESS)
     await checkChainId()
     try {
       const parsedAmounts = amounts.map((amount) =>
@@ -171,8 +172,8 @@ export function useTransaction() {
         hash: result
       })
       tokenStore.reload()
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     } finally {
       modalStore.confirmOpen = false
       removeTransaction()
@@ -196,8 +197,8 @@ export function useTransaction() {
         hash: result
       })
       tokenStore.reload()
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     } finally {
       modalStore.confirmOpen = false
 
@@ -228,8 +229,8 @@ export function useTransaction() {
         hash: result
       })
       tokenStore.reload()
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     } finally {
       modalStore.confirmOpen = false
       removeTransaction()
