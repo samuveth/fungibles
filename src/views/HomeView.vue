@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import tokens from '@/helpers/tokens.json'
-import { TELEGRAM_URL } from '@/helpers/constants'
 
 const tokenStore = useTokenStore()
 </script>
@@ -12,10 +11,7 @@ const tokenStore = useTokenStore()
       <HomeToken />
     </div>
     <template v-else>
-      <div class="bg-base-200 rounded py-20 mt-10 text-center px-4">
-        <!-- <a :href="TELEGRAM_URL" target="_blank" class="btn btn-outline btn-sm rounded-full">
-          Join the Telegram<i-hi-arrow-top-right-on-square-20-solid class="text-xs" />
-        </a> -->
+      <div class="bg-base-200 rounded py-20 mt-16 text-center px-4">
         <h1 class="text-4xl font-semibold">Universal ERC-20 Inscription Manager</h1>
         <div class="max-w-xl mx-auto">
           <p class="mt-4">Easily stabilize and store your inscriptions</p>

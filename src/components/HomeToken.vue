@@ -150,15 +150,14 @@ const hasBrokenSeed2 = computed(() => {
   return false
 })
 
-// function copyAddress() {
-//   if (!tokenStore.tokenInfo) return
-//   navigator.clipboard.writeText(tokenStore.tokenInfo.address)
-// }
-
 watch(
   [address, addressInput],
   async () => {
-    tokenStore.init(address.value! || addressInput.value)
+    if (addressInput.value) {
+      tokenStore.init(addressInput.value as Address)
+    } else {
+      tokenStore.init(address.value!)
+    }
   },
   { immediate: true }
 )
@@ -166,7 +165,7 @@ watch(
 
 <template>
   <div>
-    <div class="sm:flex justify-between px-4 py-5 bg-base-200 rounded">
+    <div class="sm:flex justify-between px-4 py-5 bg-base-200 rounded mt-6">
       <h2 class="text-xl flex items-center gap-2 pl-0.5">
         <img
           loading="lazy"
@@ -176,10 +175,6 @@ watch(
         />
         <span class="font-semibold"> {{ tokenStore.tokenInfo?.name }} </span>
         / {{ tokenStore.tokenInfo?.symbol }}
-        <!-- <button class="text-sm pl-2 flex items-center gap-1" @click="copyAddress">
-          {{ shortenAddress(tokenStore.tokenInfo?.address || '') }}
-          <i-hi-square-2-stack />
-        </button> -->
       </h2>
 
       <div class="flex items-center justify-end -mr-1">
@@ -219,21 +214,22 @@ watch(
       </div>
     </div>
 
-    <div v-if="tokenStore.initializing" class="justify-center flex mt-4">
-      <span class="loading loading-spinner loading-sm"></span>
-    </div>
-    <div v-else-if="!address">
+    <div>
       <div class="text-xl my-4">
         Connect your wallet to manage your inscriptions, or past your wallet address below.
-        <div class="mt-2">
+        <div class="flex flex-col sm:flex-row gap-2 mt-2">
           <input
             v-model="addressInput"
             type="string"
             placeholder="Enter wallet address"
-            class="input input-bordered w-full max-w-[500px]"
+            class="input input-bordered max-w-[500px]"
           />
+          <ButtonConnect />
         </div>
       </div>
+    </div>
+    <div v-if="tokenStore.initializing" class="justify-center flex mt-4">
+      <span class="loading loading-spinner loading-sm"></span>
     </div>
     <template v-if="!tokenStore.initializing && (address || addressInput)">
       <div>
