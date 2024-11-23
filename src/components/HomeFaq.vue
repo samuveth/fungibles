@@ -31,11 +31,6 @@ const items = [
       'The ERC-20i standard allows tokens to change their inscribed data with each transaction. This means that the digital artifact linked to the token can evolve over time, making each token experience unique and engaging.'
   },
   {
-    title: 'What are some examples of ERC-20i tokens?',
-    content:
-      'Fungi is a notable example of an ERC-20i token. You can find more on the Home page, where you can explore and interact with various ERC-20i tokens and their inscriptions.'
-  },
-  {
     title: 'How do ERC-20i tokens promote creativity in blockchain?',
     content:
       'ERC-20i tokens offer a platform for artists, developers, and creators to embed creative content directly into tokens. This can range from artworks to interactive experiences, all stored and verifiable on the blockchain.'
@@ -44,16 +39,6 @@ const items = [
     title: 'How can developers create an ERC-20i token?',
     content:
       'Developers can create an ERC-20i token by forking Todds ERC-20i template on GitHub. This template provides a starting point for building tokens with inscription capabilities, enabling developers to experiment with this innovative standard.'
-  },
-  {
-    title: 'What is Fungi?',
-    content:
-      'Fungi is the pioneering ERC-20i token on the Base network. It integrates unique metadata inscriptions directly into token transactions, enabling the dynamic generation of on-chain art.'
-  },
-  {
-    title: 'Where can I buy Fungi tokens tokes?',
-    content:
-      'Fungi tokens can be purchased on Uniswap on Base. The contract address for Fungi can be found on the official website fungifungi.art.'
   },
   {
     title: 'Where can I view my inscriptions?',
