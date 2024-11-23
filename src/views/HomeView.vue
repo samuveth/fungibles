@@ -13,12 +13,12 @@ const tokenStore = useTokenStore()
     </div>
     <template v-else>
       <div class="bg-base-200 rounded py-20 mt-10 text-center px-4">
-        <a :href="TELEGRAM_URL" target="_blank" class="btn btn-outline btn-sm rounded-full">
+        <!-- <a :href="TELEGRAM_URL" target="_blank" class="btn btn-outline btn-sm rounded-full">
           Join the Telegram<i-hi-arrow-top-right-on-square-20-solid class="text-xs" />
-        </a>
-        <h1 class="text-4xl font-semibold mt-8">Your ERC-20 Inscription Generator</h1>
+        </a> -->
+        <h1 class="text-4xl font-semibold">Universal ERC-20 Inscription Manager</h1>
         <div class="max-w-xl mx-auto">
-          <p class="mt-4">Generate hundreds of inscriptions in a matter of seconds</p>
+          <p class="mt-4">Easily stabilize and store your inscriptions</p>
         </div>
       </div>
       <div class="mt-10">
