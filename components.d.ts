@@ -21,6 +21,7 @@ declare module 'vue' {
     IHiPaperAirplane: typeof import('~icons/heroicons/paper-airplane')['default']
     IHiXMark20Solid: typeof import('~icons/heroicons/x-mark20-solid')['default']
     ImagePng: typeof import('./src/components/ImagePng.vue')['default']
+    InscriptionFroggi: typeof import('./src/components/InscriptionFroggi.vue')['default']
     InscriptionList: typeof import('./src/components/InscriptionList.vue')['default']
     InscriptionListItem: typeof import('./src/components/InscriptionListItem.vue')['default']
     ModalActions: typeof import('./src/components/ModalActions.vue')['default']
