@@ -151,7 +151,7 @@ const hasBrokenSeed2 = computed(() => {
 })
 
 watch(
-  [address, addressInput],
+  [address, addressInput, () => tokenStore.tokenAddress],
   async () => {
     if (addressInput.value) {
       tokenStore.init(addressInput.value as Address)
@@ -165,123 +165,127 @@ watch(
 
 <template>
   <div>
-    <div class="sm:flex justify-between px-4 py-5 bg-base-200 rounded mt-6">
-      <h2 class="text-xl flex items-center gap-2 pl-0.5">
-        <img
-          loading="lazy"
-          :src="tokenStore.tokenInfo?.logo"
-          alt="logo"
-          class="w-[28px] h-[28px] rounded-full"
-        />
-        <span class="font-semibold"> {{ tokenStore.tokenInfo?.name }} </span>
-        / {{ tokenStore.tokenInfo?.symbol }}
-      </h2>
-
-      <div class="flex items-center justify-end -mr-1">
-        <a
-          v-for="(social, i) in projectSocials"
-          :href="social.link"
-          target="_blank"
-          :key="i"
-          class="btn btn-outline border-0 btn-sm px-2 hover:bg-transparent hover:text-primary"
-        >
-          <component :is="social.icon" :class="social.size" />
-        </a>
-      </div>
-    </div>
-    <div v-if="hasBrokenSeed2" role="alert" class="alert alert-warning mt-2">
-      <i-hi-exclamation-circle />
-      You have some invalid {{ tokenStore.tokenInfo?.name }}
-      in your wallet. Send your entire balance to another wallet to fix this.
-    </div>
-    <div v-if="address" class="pt-2 sm:mt-0 mb-4 flex gap-2">
-      <div
-        v-for="(action, i) in actions"
-        :key="i"
-        class="tooltip w-full sm:w-auto"
-        :data-tip="action.tooltip"
-      >
-        <button
-          class="btn btn-primary w-full sm:w-auto"
-          :disabled="action.disabled"
-          @click="action.action()"
-        >
-          <component :is="action.icon" class="text-md" />
-          <span class="hidden sm:block">
-            {{ action.label }}
-          </span>
-        </button>
-      </div>
-    </div>
-
+    <TokenNav />
     <div>
-      <div class="text-xl my-4">
-        Connect your wallet to manage your inscriptions, or past your wallet address below.
-        <div class="flex flex-col sm:flex-row gap-2 mt-2">
-          <input
-            v-model="addressInput"
-            type="string"
-            placeholder="Enter wallet address"
-            class="input input-bordered max-w-[500px]"
+      <div class="flex justify-between px-4 py-5 bg-base-200 rounded mt-6">
+        <h2 class="text-xl flex items-center gap-2 pl-0.5">
+          <img
+            loading="lazy"
+            :src="tokenStore.tokenInfo?.logo"
+            alt="logo"
+            class="w-[28px] h-[28px] rounded-full"
           />
-          <ButtonConnect />
+          <span class="font-semibold"> {{ tokenStore.tokenInfo?.name }} </span>
+
+          <span class="font-semibold hidden sm:block"> / {{ tokenStore.tokenInfo?.symbol }} </span>
+        </h2>
+
+        <div class="flex items-center justify-end -mr-1">
+          <a
+            v-for="(social, i) in projectSocials"
+            :href="social.link"
+            target="_blank"
+            :key="i"
+            class="btn btn-outline border-0 btn-sm px-2 hover:bg-transparent hover:text-primary"
+          >
+            <component :is="social.icon" :class="social.size" />
+          </a>
         </div>
       </div>
-    </div>
-    <div v-if="tokenStore.initializing" class="justify-center flex mt-4">
-      <span class="loading loading-spinner loading-sm"></span>
-    </div>
-    <template v-if="!tokenStore.initializing && (address || addressInput)">
+      <div v-if="hasBrokenSeed2" role="alert" class="alert alert-warning mt-2">
+        <i-hi-exclamation-circle />
+        You have some invalid {{ tokenStore.tokenInfo?.name }}
+        in your wallet. Send your entire balance to another wallet to fix this.
+      </div>
+      <div v-if="address" class="pt-2 sm:mt-0 mb-4 flex gap-2">
+        <div
+          v-for="(action, i) in actions"
+          :key="i"
+          class="tooltip w-full sm:w-auto"
+          :data-tip="action.tooltip"
+        >
+          <button
+            class="btn btn-primary w-full sm:w-auto"
+            :disabled="action.disabled"
+            @click="action.action()"
+          >
+            <component :is="action.icon" class="text-md" />
+            <span class="hidden sm:block">
+              {{ action.label }}
+            </span>
+          </button>
+        </div>
+      </div>
+
       <div>
-        <div>
-          <h3 class="text-lg font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
+        <div class="text-xl my-4">
+          <div class="flex flex-col sm:flex-row gap-2 mt-2">
+            <input
+              v-model="addressInput"
+              type="string"
+              placeholder="Enter wallet address"
+              class="input input-bordered max-w-[500px] !outline-none"
+            />
+            <div class="sm:mt-3 mx-2 text-base text-center">OR</div>
+            <ButtonConnect />
+          </div>
         </div>
-
-        <div v-if="!dynamicInscriptions.length" class="">
-          No dynamic {{ tokenStore.tokenInfo?.name }} found
-        </div>
-        <InscriptionList v-else :inscriptions="dynamicInscriptions" />
       </div>
-
-      <div class="mt-6">
-        <div>
-          <h3 class="text-lg font-semibold mb-2">
-            Stable {{ tokenStore.tokenInfo?.name }}
-            <div v-if="stableInscriptions.length > 0" class="badge badge-lg font-normal">
-              {{ stableInscriptions.length }}
-            </div>
-          </h3>
-        </div>
-
-        <div v-if="!stableInscriptions.length" class="">
-          No stable {{ tokenStore.tokenInfo?.name }} found
-        </div>
-        <InscriptionList v-else :inscriptions="stableInscriptions" />
+      <div v-if="tokenStore.initializing" class="justify-center flex mt-4">
+        <span class="loading loading-spinner loading-sm"></span>
       </div>
-    </template>
+      <template v-if="!tokenStore.initializing && (address || addressInput)">
+        <div>
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Dynamic {{ tokenStore.tokenInfo?.name }}</h3>
+          </div>
 
-    <ModalCombine
-      :open="showCombineMultipleModal"
-      :inscriptions="tokenStore.inscriptions"
-      @close="showCombineMultipleModal = false"
-      @combine="handleCombine"
-    />
-    <ModalGenerate
-      v-if="dynamicInscription"
-      :open="generateModalOpen"
-      :inscription="dynamicInscription"
-      @close="generateModalOpen = false"
-      @generate="handleGenerate"
-    />
-    <ModalSendMultiple
-      :open="showSendMultipleModal"
-      :inscriptions="tokenStore.inscriptions"
-      @close="showSendMultipleModal = false"
-      @sendMultiple="handleSendMultiple"
-    />
+          <div v-if="!dynamicInscriptions.length" class="">
+            No dynamic {{ tokenStore.tokenInfo?.name }} found
+          </div>
+          <InscriptionList v-else :inscriptions="dynamicInscriptions" />
+        </div>
 
-    <ModalTransactionSpending />
-    <ModalTransactionPending />
-    <ModalTransactionConfirm />
+        <div class="mt-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-2">
+              Stable {{ tokenStore.tokenInfo?.name }}
+              <div v-if="stableInscriptions.length > 0" class="badge badge-lg font-normal">
+                {{ stableInscriptions.length }}
+              </div>
+            </h3>
+          </div>
+
+          <div v-if="!stableInscriptions.length" class="">
+            No stable {{ tokenStore.tokenInfo?.name }} found
+          </div>
+          <InscriptionList v-else :inscriptions="stableInscriptions" />
+        </div>
+      </template>
+
+      <ModalCombine
+        :open="showCombineMultipleModal"
+        :inscriptions="tokenStore.inscriptions"
+        @close="showCombineMultipleModal = false"
+        @combine="handleCombine"
+      />
+      <ModalGenerate
+        v-if="dynamicInscription"
+        :open="generateModalOpen"
+        :inscription="dynamicInscription"
+        @close="generateModalOpen = false"
+        @generate="handleGenerate"
+      />
+      <ModalSendMultiple
+        :open="showSendMultipleModal"
+        :inscriptions="tokenStore.inscriptions"
+        @close="showSendMultipleModal = false"
+        @sendMultiple="handleSendMultiple"
+      />
+
+      <ModalTransactionSpending />
+      <ModalTransactionPending />
+      <ModalTransactionConfirm />
+    </div>
   </div>
 </template>

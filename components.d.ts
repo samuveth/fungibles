@@ -12,7 +12,6 @@ declare module 'vue' {
     ButtonConnect: typeof import('./src/components/ButtonConnect.vue')['default']
     HomeBreadcrumbs: typeof import('./src/components/HomeBreadcrumbs.vue')['default']
     HomeDiscoverListItem: typeof import('./src/components/HomeDiscoverListItem.vue')['default']
-    HomeFaq: typeof import('./src/components/HomeFaq.vue')['default']
     HomeToken: typeof import('./src/components/HomeToken.vue')['default']
     IHiArrowTopRightOnSquare16Solid: typeof import('~icons/heroicons/arrow-top-right-on-square16-solid')['default']
     IHiExclamationCircle: typeof import('~icons/heroicons/exclamation-circle')['default']
@@ -38,5 +37,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TheToasts: typeof import('./src/components/TheToasts.vue')['default']
     TheTopnav: typeof import('./src/components/TheTopnav.vue')['default']
+    TokenNav: typeof import('./src/components/TokenNav.vue')['default']
   }
 }

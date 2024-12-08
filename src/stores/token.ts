@@ -16,7 +16,9 @@ export const useTokenStore = defineStore('token', () => {
   const balanceUnits = ref<bigint>(0n)
   const initializing = ref(false)
 
-  const tokenAddress = computed(() => (route.params.address as string).toLowerCase() as Address)
+  const tokenAddress = computed(
+    () => ((route.params.address as string).toLowerCase() as Address) || tokens[0].address
+  )
   const tokenInfo = computed(() =>
     tokens.find((t) => t.address.toLowerCase() === tokenAddress.value)
   )
