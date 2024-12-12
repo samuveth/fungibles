@@ -749,7 +749,7 @@ const cardClasses = computed(() => {
   position: absolute;
   bottom: -1px;
   right: 15px;
-  z-index: 3;
+  z-index: -3;
 }
 
 .inscription .level {
